@@ -59,15 +59,21 @@
   在会议上，我主要展示了之前所阅读的两篇论文，对其内容做了细致讲解，同时提出了我的毕设构思。归纳如下：
   
   - 论文1：《[Augmented Vehicular Reality](http://winlab.rutgers.edu/~gruteser/papers/hotmobile17-final28.pdf)》
+  
+    **[PPT](https://github.com/RebornC/AntiHomebody/blob/master/docs/Augmented%20Vehicular%20Reality.ppt)**
     
     由于现今的无人自动驾驶汽车存在着视线的局限性，为了提高可视性，进而提高安全性，该论文探索了一种称为车辆增强现实（AVR）的系统，初步评估了在附近汽车之间传递合并视觉信息的可行性。AVR通过使车辆与其他附近车辆共享视觉信息，从而扩大车辆的视觉范围，但需要仔细的技术来对准坐标参考框架，并检测动态物体。
     
   - 论文2：《[Ledig_Photo-Realistic_Single_Image](http://202.116.81.74/cache/6/03/openaccess.thecvf.com/ccd7f70b234f953c4d87ed9c116b2242/Ledig_Photo-Realistic_Single_Image_CVPR_2017_paper.pdf)》
   
+    **[PPT](https://github.com/RebornC/AntiHomebody/blob/master/docs/Ledig_Photo-Realistic_Single_Image.pptx)**
+  
     论文提出了将生成式对抗网络（GAN）用于单一图像超分辨率重建（SR）问题。其出发点是因为传统的方法一般处理的是较小的放大倍数，当图像的放大倍数在4以上时，很容易使得到的结果显得过于平滑，而缺少一些细节上的真实感。因此SRGAN使用GAN来生成图像中的细节。它对代价函数做了改进，其中第一部分是基于内容的代价函数，它除了像素空间的最小均方差以外，又包含了一个基于特征空间的最小均方差，该特征是利用VGG网络提取的图像高层次特征（以预训练19层VGG网络的ReLU激活层为基础的VGG loss，对VGG19的层卷积的结果求方差），第二部分是基于对抗学习的代价函数，它主要是基于判别器输出的概率。这样使得重建的高分辨率图像与真实的高分辨率图像无论是低层次的像素值上，还是高层次的抽象特征上，在整体概念和风格上都比较接近。
     
   - 毕设构思
   
+    **[PPT](https://github.com/RebornC/AntiHomebody/blob/master/docs/%E6%AF%95%E8%AE%BE%E6%9E%84%E6%80%9D%EF%BC%88%E5%88%9D%E7%89%88%EF%BC%89.pptx)**
+    
     具体可参见[项目内容](#项目内容)，导师已同意该构思。
 
 - 2018/10/30 第二次会议
