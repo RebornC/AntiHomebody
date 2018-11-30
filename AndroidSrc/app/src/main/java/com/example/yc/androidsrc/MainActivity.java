@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     /**
-     * 切换主视图的Fragment，避免重复实例化加载
+     * 切换主视图的fragment，避免重复实例化加载
      * @param position
      */
     public void switchFragment(int position) {
