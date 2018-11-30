@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">AndroidSrc</string>
+    <string name="app_name">非宅</string>
+    <string-array name="menu_zh">
+        <item>宅人</item>
+        <item>步行</item>
+        <item>计划</item>
+        <item>社区</item>
+        <item>设置</item>
+    </string-array>
+    <string-array name="menu_en">
+        <item>PERSONAL</item>
+        <item>STEP COUNTER</item>
+        <item>DAILY PLAN</item>
+        <item>COMMNITY</item>
+        <item>SETTINGS</item>
+    </string-array>
 </resources>
