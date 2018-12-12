@@ -1,13 +1,16 @@
-package com.example.yc.androidsrc;
+package com.example.yc.androidsrc.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.views.GifView;
 
 /**
  * Created by yc on 2018/11/28.
@@ -19,24 +22,31 @@ public class TabFragment1 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab_fragment1, container, false);
+        View view = inflater.inflate(R.layout.tab_fragment_1, container, false);
 
-        final GifView gifV = (GifView) view.findViewById(R.id.gifV);
+//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+//        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+//        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        final GifView gifV = (GifView) view.findViewById(R.id.gifview);
         gifV.setGifResource(R.drawable.level_1);
         final TextView text = (TextView) view.findViewById(R.id.text);
         text.setText("1");
 
-        Button btn_1 = (Button) view.findViewById(R.id.btn_1);
-        btn_1.setTag('1');
-        btn_1.setOnClickListener(new View.OnClickListener() {
+        final ImageView changeStateBtn = (ImageView) view.findViewById(R.id.change_state_btn);
+        changeStateBtn.setTag('1');
+        changeStateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getTag().equals('1')) {
                     v.setTag('0');
                     gifV.pause();
+                    changeStateBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                 } else if (v.getTag().equals('0')) {
                     v.setTag('1');
                     gifV.play();
+                    changeStateBtn.setImageResource(R.drawable.ic_stop_black_24dp);
                 }
 
             }
@@ -52,7 +62,7 @@ public class TabFragment1 extends Fragment {
                     gifV.setBackgroundColor(getResources().getColor(R.color.white));
                 } else if (v.getTag().equals('0')) {
                     v.setTag('1');
-                    gifV.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    gifV.setBackgroundColor(getResources().getColor(R.color.offWhite));
                 }
 
             }

@@ -20,6 +20,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:fitsSystemWindows="true"
+                android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -35,7 +36,7 @@
 
     <fragment
         android:id="@+id/nav_view"
-        android:name="com.example.yc.androidsrc.MenuFragment"
+        android:name="com.example.yc.androidsrc.ui.fragment.MenuFragment"
         android:layout_gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

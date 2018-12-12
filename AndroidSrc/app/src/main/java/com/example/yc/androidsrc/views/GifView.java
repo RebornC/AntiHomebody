@@ -1,4 +1,4 @@
-package com.example.yc.androidsrc;
+package com.example.yc.androidsrc.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,13 +6,20 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Movie;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
+
+import com.example.yc.androidsrc.R;
 
 /**
- * 自定义控件，用于显示Gif动图
- * Created by yc on 2018/11/18.
+ * 显示Gif动图
+ *
+ * @author RebornC
+ * Created on 2018/11/18.
  */
 
 public class GifView extends View {
@@ -35,6 +42,8 @@ public class GifView extends View {
 
     private volatile boolean mPaused;
     private boolean mVisible = true;
+
+    private static final int GIFVIEW_PAUSED = 123;
 
     /**
      * 构造函数
@@ -272,5 +281,40 @@ public class GifView extends View {
         mVisible = visibility == View.VISIBLE;
         invalidateView();
     }
+
+    /**
+     * 获取动图的时长
+     * @return
+     */
+    public int getMovieDuration() {
+        return movie.duration();
+    }
+
+    /**
+     * 接收动图停止播放的指令
+     */
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case GIFVIEW_PAUSED:
+                    pause();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 设置让动图播放n次后即停止
+     * @param count
+     */
+    public void setGifPlayCounts(int count) {
+        if (count >= 0)
+            handler.sendEmptyMessageDelayed(GIFVIEW_PAUSED, movie.duration() * count);
+    }
+
 
 }

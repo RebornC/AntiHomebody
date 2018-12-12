@@ -1,31 +1,38 @@
-package com.example.yc.androidsrc;
+package com.example.yc.androidsrc.ui.fragment;
 
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.yc.androidsrc.model.MenuItem;
+import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.adapter.MenuItemAdapter;
+import com.example.yc.androidsrc.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
+
 /**
- * Created by yc on 2018/11/26.
+ * 主界面左侧菜单
+ *
+ * @author RebornC
+ * Created on 2018/11/26.
  */
 
 public class MenuFragment extends Fragment {
 
+    private String username = (String) BmobUser.getObjectByKey("username");
+
+    private TextView userNameTv;
     private ListView mListView;
     private List<MenuItem> menuItemList = new ArrayList<>();
     private MenuItemAdapter adapter;
@@ -35,6 +42,10 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState)
     {
         View navView = inflater.inflate(R.layout.activity_menu, container, false);
+
+        userNameTv = (TextView) navView.findViewById(R.id.user_name);
+        userNameTv.setText(username);
+
         mListView = (ListView) navView.findViewById(R.id.menu_list_view);
         mListView.setDivider(null);
         initListView();
@@ -65,6 +76,14 @@ public class MenuFragment extends Fragment {
             }
         });
 
+    }
+
+    /**
+     * 默认第几项被选中
+     * @param position
+     */
+    public void setItemChecked(int position) {
+        adapter.changeSelected(position);
     }
 
 }

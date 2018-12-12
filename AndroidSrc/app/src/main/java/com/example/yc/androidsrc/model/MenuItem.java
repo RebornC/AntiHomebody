@@ -1,4 +1,4 @@
-package com.example.yc.androidsrc;
+package com.example.yc.androidsrc.model;
 
 /**
  * Created by yc on 2018/11/26.

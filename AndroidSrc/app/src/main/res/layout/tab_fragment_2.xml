@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.yc.androidsrc.views.StepProgressView
+        android:id="@+id/step_walk_arv"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <com.example.yc.androidsrc.views.ImageTextButton
+        android:id="@+id/start_count"
+        android:background="@drawable/button_shape_2"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/step_walk_arv"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"/>
+
+    <com.example.yc.androidsrc.views.ImageTextButton
+        android:id="@+id/stop_count"
+        android:background="@drawable/button_shape_2"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/step_walk_arv"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="100dp"/>
+
+</android.support.constraint.ConstraintLayout>
