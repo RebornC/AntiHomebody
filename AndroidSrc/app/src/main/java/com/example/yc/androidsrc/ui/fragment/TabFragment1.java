@@ -13,7 +13,8 @@ import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.views.GifView;
 
 /**
- * Created by yc on 2018/11/28.
+ * @author RebornC
+ * Created on 2018/11/28.
  */
 
 public class TabFragment1 extends Fragment {

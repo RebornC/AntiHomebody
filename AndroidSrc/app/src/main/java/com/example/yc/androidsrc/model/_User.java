@@ -4,7 +4,8 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
 /**
- * Created by yc on 2018/12/12.
+ * @author RebornC
+ * Created on 2018/12/12.
  */
 
 public class _User extends BmobUser {

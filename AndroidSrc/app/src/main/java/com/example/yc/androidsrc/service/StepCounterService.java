@@ -18,6 +18,13 @@ import android.util.Log;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.ui.activity.MainActivity;
 
+/**
+ * 开启服务，获取手机内置传感器的相关数据进行计步
+ *
+ * @author RebornC
+ * Created on 2018/12/3.
+ */
+
 public class StepCounterService extends Service implements SensorEventListener {
 
     // IBinder对象，向Activity传递数据的桥梁

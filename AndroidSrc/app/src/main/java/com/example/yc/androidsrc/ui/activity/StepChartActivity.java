@@ -29,7 +29,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by yc on 2018/12/10.
+ * 用户步数历史记录统计
+ *
+ * @author RebornC
+ * Created on 2018/12/10.
  */
 
 public class StepChartActivity extends AppCompatActivity {

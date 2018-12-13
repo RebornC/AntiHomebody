@@ -15,7 +15,8 @@ import com.example.yc.androidsrc.ui.activity.LoginActivity;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by yc on 2018/11/28.
+ * @author RebornC
+ * Created on 2018/11/28.
  */
 
 public class TabFragment5 extends Fragment implements View.OnClickListener{

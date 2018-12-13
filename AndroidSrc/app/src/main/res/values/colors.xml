@@ -3,8 +3,6 @@
     <color name="colorPrimary">#292929</color>
     <color name="colorPrimaryDark">#363636</color> // 工具栏
     <color name="colorAccent">#79a1ae</color>
-    <color name="colorBackground_1">#f7f7f7</color>
-    <color name="colorBackground_2">#d9e0de</color>
     <color name="white">#ffffff</color>
     <color name="gray">#888888</color>
     <color name="black">#000000</color>

@@ -24,14 +24,13 @@ public class LoginPresenterCompl implements ILoginPresenter {
     private ILoginView iLoginView;
     private String phone;
     private String psd;
-
     private String msg = "";
-    private static final int CODE_1 = 1; // 手机号码为空
-    private static final int CODE_2 = 2; // 密码为空
-    private static final int CODE_3 = 3; // 该手机号码未被注册
-    private static final int CODE_4 = 4; // 密码错误
-    private static final int CODE_5 = 5; // Bmob error
-    private static final int CODE_6 = 6; // 登录成功
+    private static final int LOGIN_FAIL_CODE_1 = 1; // 手机号码为空
+    private static final int LOGIN_FAIL_CODE_2 = 2; // 密码为空
+    private static final int LOGIN_FAIL_CODE_3 = 3; // 该手机号码未被注册
+    private static final int LOGIN_FAIL_CODE_4 = 4; // 密码错误
+    private static final int LOGIN_FAIL_CODE_5 = 5; // Bmob error
+    private static final int LOGIN_SUCCESS_CODE = 6; // 登录成功
 
     public LoginPresenterCompl(ILoginView iLoginView) {
         this.iLoginView = iLoginView;
@@ -56,10 +55,10 @@ public class LoginPresenterCompl implements ILoginPresenter {
      */
     public boolean checkInput(String phone, String psd) {
         if (phone.equals("")) {
-            iLoginView.onLoginResult(false, CODE_1, msg);
+            iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_1, msg);
             return false;
         } else if (psd.equals("")) {
-            iLoginView.onLoginResult(false, CODE_2, msg);
+            iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_2, msg);
             return false;
         } else {
             return true;
@@ -84,11 +83,11 @@ public class LoginPresenterCompl implements ILoginPresenter {
                         signIn(username);
                     } else {
                         iLoginView.onSetProgressDialogVisibility(false);
-                        iLoginView.onLoginResult(false, CODE_3, msg);
+                        iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_3, msg);
                     }
                 } else {
                     iLoginView.onSetProgressDialogVisibility(false);
-                    iLoginView.onLoginResult(false, CODE_5, e.getMessage());
+                    iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_5, e.getMessage());
                 }
             }
         });
@@ -103,12 +102,12 @@ public class LoginPresenterCompl implements ILoginPresenter {
             public void done(_User user, BmobException e) {
                 iLoginView.onSetProgressDialogVisibility(false);
                 if (e == null) {
-                    iLoginView.onLoginResult(true, CODE_6, msg);
+                    iLoginView.onLoginResult(true, LOGIN_SUCCESS_CODE, msg);
                 } else {
                     if (e.getErrorCode() == 101)
-                        iLoginView.onLoginResult(false, CODE_4, msg);
+                        iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_4, msg);
                     else
-                        iLoginView.onLoginResult(false, CODE_5, e.getMessage());
+                        iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_5, e.getMessage());
                 }
             }
         });

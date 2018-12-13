@@ -1,7 +1,8 @@
 package com.example.yc.androidsrc.model;
 
 /**
- * Created by yc on 2018/11/26.
+ * @author RebornC
+ * Created on 2018/11/26.
  */
 
 public class MenuItem {

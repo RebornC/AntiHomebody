@@ -8,8 +8,6 @@ import android.view.WindowManager;
 
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.model._User;
-import com.example.yc.androidsrc.ui.activity.LoginActivity;
-import com.example.yc.androidsrc.ui.activity.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

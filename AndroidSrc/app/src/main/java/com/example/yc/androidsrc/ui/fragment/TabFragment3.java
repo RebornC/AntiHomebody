@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import com.example.yc.androidsrc.R;
 
 /**
- * Created by yc on 2018/11/28.
+ * @author RebornC
+ * Created on 2018/11/28.
  */
 
 public class TabFragment3 extends Fragment {

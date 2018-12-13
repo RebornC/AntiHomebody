@@ -11,7 +11,9 @@ import java.util.List;
 
 /**
  * 封装：访问数据库中的数据并进行相关操作
- * Created by yc on 2018/12/11.
+ *
+ * @author RebornC
+ * Created on 2018/12/11.
  */
 
 public class SQLiteDataDao {

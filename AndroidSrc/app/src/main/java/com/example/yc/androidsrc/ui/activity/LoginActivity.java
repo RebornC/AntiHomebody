@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
     }
 
     @Override
-    public void onLoginResult(Boolean result, int code, String message) {
+    public void onLoginResult(boolean result, int code, String message) {
         if (result) {
             // 登录成功
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

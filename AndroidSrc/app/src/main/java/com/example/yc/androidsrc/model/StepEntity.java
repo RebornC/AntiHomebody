@@ -1,7 +1,8 @@
 package com.example.yc.androidsrc.model;
 
 /**
- * Created by yc on 2018/12/11.
+ * @author RebornC
+ * Created on 2018/12/11.
  */
 
 public class StepEntity {

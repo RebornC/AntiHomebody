@@ -28,7 +28,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by yc on 2018/11/28.
+ * @author RebornC
+ * Created on 2018/11/28.
  */
 
 public class TabFragment2 extends Fragment {

@@ -32,6 +32,7 @@ public class MenuFragment extends Fragment {
 
     private String username = (String) BmobUser.getObjectByKey("username");
 
+    private View navView;
     private TextView userNameTv;
     private ListView mListView;
     private List<MenuItem> menuItemList = new ArrayList<>();
@@ -41,19 +42,21 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View navView = inflater.inflate(R.layout.activity_menu, container, false);
+        navView = inflater.inflate(R.layout.activity_menu, container, false);
 
-        userNameTv = (TextView) navView.findViewById(R.id.user_name);
-        userNameTv.setText(username);
-
-        mListView = (ListView) navView.findViewById(R.id.menu_list_view);
-        mListView.setDivider(null);
-        initListView();
+        initView();
         clickEvents();
+
         return navView;
     }
 
-    public void initListView() {
+    public void initView() {
+        // find view
+        userNameTv = (TextView) navView.findViewById(R.id.user_name);
+        userNameTv.setText(username);
+        mListView = (ListView) navView.findViewById(R.id.menu_list_view);
+        mListView.setDivider(null);
+        // init ListView
         String[] data_zh = getResources().getStringArray(R.array.menu_zh);
         String[] data_en = getResources().getStringArray(R.array.menu_en);
         for (int i = 0; i < data_zh.length; i++) {

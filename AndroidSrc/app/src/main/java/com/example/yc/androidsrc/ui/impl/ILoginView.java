@@ -8,6 +8,6 @@ package com.example.yc.androidsrc.ui.impl;
  */
 
 public interface ILoginView {
-    void onLoginResult(Boolean result, int code, String message);
+    void onLoginResult(boolean result, int code, String message);
     void onSetProgressDialogVisibility(boolean visibility);
 }

@@ -24,6 +24,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.yc.androidsrc.presenter.MainPresenterCompl;
+import com.example.yc.androidsrc.presenter.impl.IMainPresenter;
 import com.example.yc.androidsrc.ui.fragment.MenuFragment;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.ui.fragment.TabFragment1;
@@ -31,17 +33,24 @@ import com.example.yc.androidsrc.ui.fragment.TabFragment2;
 import com.example.yc.androidsrc.ui.fragment.TabFragment3;
 import com.example.yc.androidsrc.ui.fragment.TabFragment4;
 import com.example.yc.androidsrc.ui.fragment.TabFragment5;
+import com.example.yc.androidsrc.ui.impl.IMainView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * 主界面
+ *
+ * @author RebornC
+ * Created on 2018/11/26.
+ */
 
-    // 存储所需要申请的动态权限
-    private static String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.BODY_SENSORS};
+public class MainActivity extends AppCompatActivity implements IMainView {
 
+    private IMainPresenter mainPresenter;
     private DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
+    private CardView cardView;
     private FrameLayout contentFrameLayout;
     private Fragment currentFragment;
     private List<Fragment> tabFragments = new ArrayList<>();
@@ -50,16 +59,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
+        // 设置组件属性并加载
+        initView();
         // 动态权限申请
-        verifyPermissions(MainActivity.this);
+        applyPermissions(MainActivity.this);
+    }
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setScrimColor(Color.TRANSPARENT); // 菜单滑动时content不被阴影覆盖
+    public void initView() {
+        mainPresenter = new MainPresenterCompl(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        cardView = (CardView) findViewById(R.id.card_view);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(""); // 不显示程序应用名
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -69,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
-        final CardView cardView = (CardView) findViewById(R.id.card_view);
 
         tabFragments.add(new TabFragment1());
         tabFragments.add(new TabFragment2());
@@ -83,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.content_view, currentFragment).commit();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT); // 菜单滑动时content不被阴影覆盖
 
         /**
          * 监听抽屉的滑动事件
@@ -120,23 +134,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
-//    public void replaceFragment(Fragment fragment) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment current = fragmentManager.findFragmentById(R.id.content_view);
-//        if (current != null) {
-//            if (current.getClass().equals(fragment.getClass())) {
-//                // 如果是同个fragment，则维持原样
-//                return;
-//            }
-//        }
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.content_view, fragment);
-//        transaction.addToBackStack(null); // 模拟返回栈
-//        transaction.commit();
-//    }
+    public void applyPermissions(Activity activity) {
+        // 交给presenter逻辑层处理
+        mainPresenter.verifyPermissions(activity);
+    }
+
 
     /**
      * 切换主视图的fragment，避免重复实例化加载
@@ -198,25 +202,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 针对 Android 6.0 以上机型进行动态权限申请
-     * @param activity
+     * 权限申请的结果回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
      */
-    public static void verifyPermissions(Activity activity) {
-        if (Build.VERSION.SDK_INT > 23) {
-            List<String> mPermissionList = new ArrayList<>();
-            // 检查是否已经授予了权限
-            for (int i = 0; i < permissions.length; i++) {
-                if (ActivityCompat.checkSelfPermission(activity, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
-                    mPermissionList.add(permissions[i]);
-                }
-            }
-            if (!mPermissionList.isEmpty()) {
-                String[] mPermissions = mPermissionList.toArray(new String[mPermissionList.size()]); // 将List转为数组
-                ActivityCompat.requestPermissions(activity, mPermissions, 1);
-            }
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -228,11 +218,11 @@ public class MainActivity extends AppCompatActivity {
                         boolean showRequestPermission = ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permissions[i]);
                         if (showRequestPermission) {
                             // 重新申请权限
-                            verifyPermissions(MainActivity.this);
+                            mainPresenter.verifyPermissions(MainActivity.this);
                             return;
                         } else {
                             // 已禁止再次询问，提示用户手动设置权限
-                            showMissingPermissionDialog();
+                            mainPresenter.showMissingPermissionDialog(MainActivity.this);
                         }
                     }
                 }
@@ -241,34 +231,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showMissingPermissionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("请前往设置界面授予权限，否则将退出应用");
-        // 拒绝, 退出应用
-        builder.setNegativeButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-        builder.setPositiveButton("设置",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startAppSettings();
-                    }
-                });
-
-        builder.setCancelable(false);
-        builder.show();
+    /**
+     * 用户是否同意手动设置权限的结果回调
+     * @param isChecked
+     */
+    @Override
+    public void onShowMissingPermissionDialog(boolean isChecked) {
+        if (isChecked) {
+            // 前往设置界面授予权限
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        } else
+            // 退出应用
+            finish();
     }
-
-    private void startAppSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivity(intent);
-    }
-
 }
