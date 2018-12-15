@@ -24,8 +24,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.yc.androidsrc.presenter.MainPresenterCompl;
-import com.example.yc.androidsrc.presenter.impl.IMainPresenter;
 import com.example.yc.androidsrc.ui.fragment.MenuFragment;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.ui.fragment.TabFragment1;
@@ -33,7 +31,6 @@ import com.example.yc.androidsrc.ui.fragment.TabFragment2;
 import com.example.yc.androidsrc.ui.fragment.TabFragment3;
 import com.example.yc.androidsrc.ui.fragment.TabFragment4;
 import com.example.yc.androidsrc.ui.fragment.TabFragment5;
-import com.example.yc.androidsrc.ui.impl.IMainView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +42,12 @@ import java.util.List;
  * Created on 2018/11/26.
  */
 
-public class MainActivity extends AppCompatActivity implements IMainView {
+public class MainActivity extends AppCompatActivity {
 
-    private IMainPresenter mainPresenter;
+    // 存储所需要申请的动态权限
+    private static String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.BODY_SENSORS};
+
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private CardView cardView;
@@ -64,11 +64,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         // 设置组件属性并加载
         initView();
         // 动态权限申请
-        applyPermissions(MainActivity.this);
+        verifyPermissions(MainActivity.this);
     }
 
     public void initView() {
-        mainPresenter = new MainPresenterCompl(this);
 
         cardView = (CardView) findViewById(R.id.card_view);
 
@@ -136,11 +135,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         });
     }
 
-    public void applyPermissions(Activity activity) {
-        // 交给presenter逻辑层处理
-        mainPresenter.verifyPermissions(activity);
-    }
-
 
     /**
      * 切换主视图的fragment，避免重复实例化加载
@@ -202,11 +196,25 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     /**
-     * 权限申请的结果回调
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * 针对 Android 6.0 以上机型进行动态权限申请
+     * @param activity
      */
+    public static void verifyPermissions(Activity activity) {
+        if (Build.VERSION.SDK_INT > 23) {
+            List<String> mPermissionList = new ArrayList<>();
+            // 检查是否已经授予了权限
+            for (int i = 0; i < permissions.length; i++) {
+                if (ActivityCompat.checkSelfPermission(activity, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i]);
+                }
+            }
+            if (!mPermissionList.isEmpty()) {
+                String[] mPermissions = mPermissionList.toArray(new String[mPermissionList.size()]); // 将List转为数组
+                ActivityCompat.requestPermissions(activity, mPermissions, 1);
+            }
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -218,11 +226,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
                         boolean showRequestPermission = ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permissions[i]);
                         if (showRequestPermission) {
                             // 重新申请权限
-                            mainPresenter.verifyPermissions(MainActivity.this);
+                            verifyPermissions(MainActivity.this);
                             return;
                         } else {
                             // 已禁止再次询问，提示用户手动设置权限
-                            mainPresenter.showMissingPermissionDialog(MainActivity.this);
+                            showMissingPermissionDialog();
                         }
                     }
                 }
@@ -231,19 +239,35 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         }
     }
 
-    /**
-     * 用户是否同意手动设置权限的结果回调
-     * @param isChecked
-     */
-    @Override
-    public void onShowMissingPermissionDialog(boolean isChecked) {
-        if (isChecked) {
-            // 前往设置界面授予权限
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            startActivity(intent);
-        } else
-            // 退出应用
-            finish();
+    private void showMissingPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("请前往设置界面授予权限，否则将退出应用");
+        // 拒绝, 退出应用
+        builder.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        builder.setPositiveButton("设置",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startAppSettings();
+                    }
+                });
+
+        builder.setCancelable(false);
+        builder.show();
     }
+
+    private void startAppSettings() {
+        // 进入权限设置界面
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
+
 }
