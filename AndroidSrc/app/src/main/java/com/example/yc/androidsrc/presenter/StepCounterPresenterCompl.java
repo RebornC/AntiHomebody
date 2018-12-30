@@ -76,7 +76,6 @@ public class StepCounterPresenterCompl implements IStepCounterPresenter {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    // 更新成功
                     // iStepCounterView.onUpdateData(true, "该数据已更新至云端");
                 } else {
                     // iStepCounterView.onUpdateData(true, "该数据暂时无法更新至云端");
