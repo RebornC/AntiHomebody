@@ -13,10 +13,17 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 
 /**
  * 折线图表的自定义MakerView
+ * 根据传进来的dayLength，获取X轴每个index对应的日期并展示
  *
  * @author RebornC
  * Created on 2018/12/11.
@@ -26,16 +33,33 @@ public class LineChartMarkView extends MarkerView {
 
     private TextView tvDate;
     private TextView tvValue;
+    private int dayLength;
+    private List<String> dateList = new ArrayList<>();
 
-    public LineChartMarkView(Context context, int layoutResource) {
+    public LineChartMarkView(Context context, int layoutResource, int dayLength) {
         super(context, layoutResource);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvValue = (TextView) findViewById(R.id.tv_value);
+        this.dayLength = dayLength;
+
+        // 根据dayLength获取近7天or30天的日期
+        Calendar cal = Calendar.getInstance();
+        for(int i = 0 ; i < dayLength ; i++){
+            Date date = cal.getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+            String dateString = formatter.format(date);
+            dateList.add(dateString);
+            // 将日历日期往前推1天
+            cal.add(cal.DATE, -1);
+        }
+
+        // 翻转数组
+        Collections.reverse(dateList);
     }
 
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        String tradeDate = (int) e.getX() + "";
+        String tradeDate = dateList.get((int) e.getX());
         tvDate.setText(DateUtil.formatDate3(tradeDate));
         tvValue.setText((int) e.getY() + "步");
     }

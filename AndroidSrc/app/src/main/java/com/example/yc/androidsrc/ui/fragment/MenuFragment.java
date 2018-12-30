@@ -1,5 +1,6 @@
 package com.example.yc.androidsrc.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.yc.androidsrc.model.MenuItem;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.adapter.MenuItemAdapter;
+import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.ui.activity.MainActivity;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import cn.bmob.v3.BmobUser;
 
 public class MenuFragment extends Fragment {
 
-    private String username = (String) BmobUser.getObjectByKey("username");
+    private _User curUser = BmobUser.getCurrentUser(_User.class);
 
     private View navView;
     private TextView userNameTv;
@@ -53,7 +55,7 @@ public class MenuFragment extends Fragment {
     public void initView() {
         // find view
         userNameTv = (TextView) navView.findViewById(R.id.user_name);
-        userNameTv.setText(username);
+        userNameTv.setText(curUser.getUsername());
         mListView = (ListView) navView.findViewById(R.id.menu_list_view);
         mListView.setDivider(null);
         // init ListView

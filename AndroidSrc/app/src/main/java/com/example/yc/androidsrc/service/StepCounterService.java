@@ -37,7 +37,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private static int stepSensorType = -1;
     // 默认1秒进行一次存储
     private static int duration = 1000 * 1;
-    // 计时器
+    // 计时器 (CountDownTimer通过开启子线程实现)
     private TimeCount time;
     // 当前所走的步数
     private int CURRENT_STEP;
@@ -47,74 +47,72 @@ public class StepCounterService extends Service implements SensorEventListener {
     private int hasStepCount = 0;
     // 上一次的步数
     private int previousStepCount = 0;
-
+    // 状态通知栏
     private Notification.Builder builder;
     private NotificationManager notificationManager;
     private Intent nfIntent;
+    // 开启子线程获取传感器实时数据
+    private Thread stepSensorThread;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        new Thread(new Runnable() {
+        // Log.v("------开启服务: ", Thread.currentThread().getName());
+        // Log.v("------service: ", "onCreate");
+        stepSensorThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                // Log.v("------开启子线程，获取传感器: ", Thread.currentThread().getName());
                 startStepDetector();
             }
-        }).start();
+        });
+        stepSensorThread.start();
         startTimeCount();
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        /**
-         * 此处设将Service为前台，不然当APP结束以后很容易被GC给干掉，这也就是大多数音乐播放器会在状态栏设置一个
-         * 原理大都是相通的
-         */
+        // Log.v("------service: ", "onStartCommand");
+        // 此处将Service为前台，不然很容易被GC给干掉
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //获取一个Notification构造器
         builder = new Notification.Builder(this.getApplicationContext());
-        /**
-         * 设置点击通知栏打开的界面，此处需要注意了，如果你的计步界面不在主界面，则需要判断app是否已经启动，
-         * 再来确定跳转页面，这里面太多坑，（别问我为什么知道 - -）
-         * 总之有需要的可以和我交流
-         */
+        // 设置点击通知栏打开的界面
         nfIntent = new Intent(this, MainActivity.class);
-        nfIntent.putExtra("toValue","switchFragment1"); // 点击通知栏跳转到计步fragment界面
+        nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo_round)) // 设置下拉列表中的图标(大图标)
-                .setContentTitle("已累计"+CURRENT_STEP+"步") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.logo_round) // 设置状态栏内的小图标
-                .setContentText("加油，要记得勤加运动"); // 设置上下文内容
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.person)) // 设置下拉列表中的图标(大图标)
+                .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
+                .setSmallIcon(R.mipmap.person) // 设置状态栏内的小图标
+                .setContentText("非宅正在记录你的运动"); // 设置上下文内容
         // 获取构建好的Notification
         Notification stepNotification = builder.build();
         notificationManager.notify(110, stepNotification);
-        // 参数一：唯一的通知标识；参数二：通知消息。
+        // 参数1：唯一的通知标识；参数2：通知消息。
         startForeground(110, stepNotification);// 开始前台服务
-
         return START_STICKY;
     }
 
 
     @Override
     public IBinder onBind(Intent intent) {
+        // Log.v("------binder: ", "onBind");
         return stepBinder;
     }
+
 
     /**
      * 向Activity传递数据的纽带
      */
     public class StepBinder extends Binder {
-
-        /**
-         * 获取当前service对象
-         * @return StepService
-         */
+        // 获取当前service对象
         public StepCounterService getService() {
             return StepCounterService.this;
         }
     }
+
 
     /**
      * 注册UI更新监听
@@ -124,15 +122,18 @@ public class StepCounterService extends Service implements SensorEventListener {
         this.mCallback = paramICallback;
     }
 
+
     /**
      * 开始保存计步数据
      */
     private void startTimeCount() {
         if (time == null) {
+            // 每一秒反馈一次传感器数据
             time = new TimeCount(duration, 1000);
         }
         time.start();
     }
+
 
     /**
      * 获取传感器实例
@@ -142,11 +143,11 @@ public class StepCounterService extends Service implements SensorEventListener {
             sensorManager = null;
         }
         // 获取传感器管理器的实例
-        sensorManager = (SensorManager) this
-                .getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         // android4.4以后可以使用计步传感器
         addStepCountListener();
     }
+
 
     /**
      * 添加传感器监听
@@ -158,21 +159,21 @@ public class StepCounterService extends Service implements SensorEventListener {
      *
      * 2.TYPE_STEP_DETECTOR是指走路检测器，即单次有效计步
      * 根据API文档，该sensor用来监测走步，每次返回数字1.0（浮点数）
-     * 如果需要长事件的计步请使用TYPE_STEP_COUNTER
      */
     private void addStepCountListener() {
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         Sensor detectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         if (countSensor != null) {
             stepSensorType = Sensor.TYPE_STEP_COUNTER;
-            Log.i("StepCounterService", "Sensor.TYPE_STEP_COUNTER");
+            // Log.i("StepCounterService", "Sensor.TYPE_STEP_COUNTER");
             sensorManager.registerListener(StepCounterService.this, countSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else if (detectorSensor != null) {
             stepSensorType = Sensor.TYPE_STEP_DETECTOR;
-            Log.i("StepCounterService", "Sensor.TYPE_STEP_DETECTOR");
+            // Log.i("StepCounterService", "Sensor.TYPE_STEP_DETECTOR");
             sensorManager.registerListener(StepCounterService.this, detectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
+
 
     /**
      * 传感器监听回调
@@ -204,10 +205,12 @@ public class StepCounterService extends Service implements SensorEventListener {
         }
     }
 
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 
     /**
      * 获取当前步数
@@ -216,6 +219,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     public int getStepCount() {
         return CURRENT_STEP;
     }
+
 
     /**
      * 保存计步数据并更新UI
@@ -235,18 +239,18 @@ public class StepCounterService extends Service implements SensorEventListener {
             // 如果计时器正常结束，则开始计步
             time.cancel();
             mCallback.updateUIStep(CURRENT_STEP);
-
+            // 设置通知栏
             nfIntent = new Intent(StepCounterService.this, MainActivity.class);
-            nfIntent.putExtra("toValue","switchFragment1"); // 点击通知栏跳转到计步fragment界面
+            nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
             builder.setContentIntent(PendingIntent.getActivity(StepCounterService.this, 0, nfIntent, 0)) // 设置PendingIntent
-                    .setLargeIcon(BitmapFactory.decodeResource(StepCounterService.this.getResources(), R.mipmap.logo_round)) // 设置下拉列表中的图标(大图标)
-                    .setContentTitle("已累计"+CURRENT_STEP+"步") // 设置下拉列表里的标题
-                    .setSmallIcon(R.mipmap.logo_round) // 设置状态栏内的小图标
-                    .setContentText("加油，要记得勤加运动"); // 设置上下文内容
+                    .setLargeIcon(BitmapFactory.decodeResource(StepCounterService.this.getResources(), R.mipmap.person)) // 设置下拉列表中的图标(大图标)
+                    .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
+                    .setSmallIcon(R.mipmap.person) // 设置状态栏内的小图标
+                    .setContentText("非宅正在记录你的运动"); // 设置上下文内容
             // 获取构建好的Notification
             Notification stepNotification = builder.build();
             notificationManager.notify(110, stepNotification);
-
+            // 继续计时
             startTimeCount();
         }
     }
@@ -254,12 +258,17 @@ public class StepCounterService extends Service implements SensorEventListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // Log.v("------service: ", "onDestroy");
         // 取消前台进程
         stopForeground(true);
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
+        // Log.v("------binder: ", "onUnBind");
+        // 一定一定要销毁这个子线程！！
+        time.cancel();
+        //stepSensorThread.stop();
         return super.onUnbind(intent);
     }
 }

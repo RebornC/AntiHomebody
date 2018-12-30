@@ -23,11 +23,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.yc.androidsrc.ui.fragment.MenuFragment;
 import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.ui.fragment.StepCounterFragment;
 import com.example.yc.androidsrc.ui.fragment.TabFragment1;
-import com.example.yc.androidsrc.ui.fragment.TabFragment2;
 import com.example.yc.androidsrc.ui.fragment.TabFragment3;
 import com.example.yc.androidsrc.ui.fragment.TabFragment4;
 import com.example.yc.androidsrc.ui.fragment.TabFragment5;
@@ -44,6 +45,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity instance = null;
     // 存储所需要申请的动态权限
     private static String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.BODY_SENSORS};
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
         // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         tabFragments.add(new TabFragment1());
-        tabFragments.add(new TabFragment2());
+        tabFragments.add(new StepCounterFragment());
         tabFragments.add(new TabFragment3());
         tabFragments.add(new TabFragment4());
         tabFragments.add(new TabFragment5());
@@ -134,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     /**
      * 切换主视图的fragment，避免重复实例化加载

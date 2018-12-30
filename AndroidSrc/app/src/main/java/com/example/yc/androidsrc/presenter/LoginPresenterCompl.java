@@ -1,5 +1,9 @@
 package com.example.yc.androidsrc.presenter;
 
+import android.content.Context;
+
+import com.example.yc.androidsrc.db.StepDataDao;
+import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.impl.ILoginPresenter;
 import com.example.yc.androidsrc.ui.impl.ILoginView;
@@ -21,6 +25,7 @@ import cn.bmob.v3.listener.LogInListener;
 
 public class LoginPresenterCompl implements ILoginPresenter {
 
+    private Context context;
     private ILoginView iLoginView;
     private String phone;
     private String psd;
@@ -37,7 +42,8 @@ public class LoginPresenterCompl implements ILoginPresenter {
     }
 
     @Override
-    public void doLogin(String phone, String psd) {
+    public void doLogin(String phone, String psd, Context context) {
+        this.context = context;
         if (checkInput(phone, psd)) {
             this.phone = phone;
             this.psd = psd;
@@ -103,6 +109,10 @@ public class LoginPresenterCompl implements ILoginPresenter {
                 iLoginView.onSetProgressDialogVisibility(false);
                 if (e == null) {
                     iLoginView.onLoginResult(true, LOGIN_SUCCESS_CODE, msg);
+                    // 登录成功后，查询数据库中是否存在该用户的记录
+                    // 若没有，即是第一次登录，则在数据表中为其添加一条新记录；若存在，则进行数据更新
+                    UserDataDao dao = new UserDataDao(context);
+                    dao.updateUserDataAfterLogin(user);
                 } else {
                     if (e.getErrorCode() == 101)
                         iLoginView.onLoginResult(false, LOGIN_FAIL_CODE_4, msg);

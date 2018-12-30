@@ -1,17 +1,26 @@
 <resources>
     <string name="app_name">非宅</string>
     <string-array name="menu_zh">
-        <item>宅人</item>
+        <item>成长</item>
         <item>步行</item>
         <item>计划</item>
         <item>社区</item>
-        <item>设置</item>
+        <item>我的</item>
     </string-array>
     <string-array name="menu_en">
-        <item>PERSONAL</item>
+        <item>GROW UP</item>
         <item>STEP COUNTER</item>
         <item>DAILY PLAN</item>
         <item>COMMNITY</item>
-        <item>SETTINGS</item>
+        <item>PERSONAL</item>
+    </string-array>
+    <string-array name="custom_weekdays">
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
     </string-array>
 </resources>

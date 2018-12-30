@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/dialog_edit"
+        android:hint="输入你的今日计划吧"
+        android:minLines="2"
+        android:textCursorDrawable="@drawable/cursor_1"
+        android:textSize="15sp"
+        android:background="@drawable/edit_text_shape_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_shape_1"
+            android:text="取消" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_comfirm"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_shape_1"
+            android:text="确定" />
+
+    </LinearLayout>
+
+</LinearLayout>

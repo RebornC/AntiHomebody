@@ -13,6 +13,7 @@ import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.presenter.RegisterPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.IRegisterPresenter;
 import com.example.yc.androidsrc.ui.impl.IRegisterView;
+import com.example.yc.androidsrc.utils.CheckUtil;
 import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.CustomDialog;
 
@@ -104,13 +105,18 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
     public void onShowLoginDialog(boolean isLogin) {
         // 选择登录
         if (isLogin)
-            registerPresenter.doLogin(userName.getText().toString(), password.getText().toString());
+            registerPresenter.doLogin(userName.getText().toString(), password.getText().toString(), RegisterActivity.this);
     }
 
     @Override
     public void onLoginResult(boolean result, int code, String message) {
         if (result) {
-            // 登录成功，进入主界面
+            // 登录成功
+            // 假若MainActivity已经存在于栈中，则需要销毁再重新实例化，这样用户界面得以更新
+            if (CheckUtil.isActivityRunning(this, "MainActivity")) {
+                MainActivity.instance.finish();
+            }
+            // 进入主界面
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

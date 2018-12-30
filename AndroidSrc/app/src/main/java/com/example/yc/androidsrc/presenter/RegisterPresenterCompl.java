@@ -1,5 +1,6 @@
 package com.example.yc.androidsrc.presenter;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.yc.androidsrc.app.AppConfig;
+import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.impl.IRegisterPresenter;
 import com.example.yc.androidsrc.ui.activity.MainActivity;
@@ -28,7 +31,9 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class RegisterPresenterCompl implements IRegisterPresenter {
 
+    private Context context;
     private IRegisterView iRegisterView;
+    private AppConfig app = new AppConfig();
 
     private String msg = "";
     private static final int REGISTER_FAIL_CODE_1 = 1; // 填写不完整
@@ -82,14 +87,18 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     }
 
     @Override
-    public void doLogin(String username, String psd) {
+    public void doLogin(String username, String psd, Context mContext) {
         // 登录
+        this.context = mContext;
         BmobUser.loginByAccount(username, psd, new LogInListener<_User>() {
             @Override
             public void done(_User user, BmobException e) {
                 iRegisterView.onSetProgressDialogVisibility(false);
                 if (e == null) {
                     iRegisterView.onLoginResult(true, LOGIN_SUCCESS_CODE, msg);
+                    // 注册并登录成功后，在数据库中添加该用户的信息
+                    UserDataDao dao = new UserDataDao(context);
+                    dao.addNewUserData(user);
                 } else {
                     iRegisterView.onLoginResult(false, LOGIN_FAIL_CODE, e.getMessage());
                 }
@@ -121,6 +130,12 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
         user.setUsername(username);
         user.setMobilePhoneNumber(phone);
         user.setPassword(psd);
+        // 设置初始的等级与能量值
+        user.setCurLevel(1);
+        user.setNumerator(0);
+        user.setDenominator(app.getLevelEnergy(1));
+        user.setCurEnergy(0);
+        user.setTotalEnergy(0);
         user.signUp(new SaveListener<_User>() {
             @Override
             public void done(_User user, BmobException e) {

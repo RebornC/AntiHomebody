@@ -52,4 +52,9 @@ public class ImageTextButton extends RelativeLayout {
     public void setTextSize(float size) {
         this.textView.setTextSize(size);
     }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+    }
 }

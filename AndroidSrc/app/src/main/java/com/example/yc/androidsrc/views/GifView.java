@@ -18,7 +18,6 @@ import com.example.yc.androidsrc.R;
 /**
  * 显示Gif动图
  *
- * @author RebornC
  * Created on 2018/11/18.
  */
 

@@ -1,5 +1,7 @@
 package com.example.yc.androidsrc.presenter.impl;
 
+import android.content.Context;
+
 /**
  * 用户登录模块的逻辑层接口
  *
@@ -8,6 +10,6 @@ package com.example.yc.androidsrc.presenter.impl;
  */
 
 public interface ILoginPresenter {
-    void doLogin(String phone, String psd);
+    void doLogin(String phone, String psd, Context context);
     void setProgressDialogVisibility(boolean visibility);
 }

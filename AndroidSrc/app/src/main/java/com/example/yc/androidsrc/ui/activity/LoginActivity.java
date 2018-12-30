@@ -1,5 +1,7 @@
 package com.example.yc.androidsrc.ui.activity;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +16,12 @@ import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.presenter.LoginPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.ILoginPresenter;
 import com.example.yc.androidsrc.ui.impl.ILoginView;
+import com.example.yc.androidsrc.utils.CheckUtil;
 import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.CustomDialog;
 import com.example.yc.androidsrc.views.GifView;
+
+import java.util.List;
 
 /**
  * 用户登录模块
@@ -69,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
                 startActivity(intent);
                 break;
             case R.id.login:
-                loginPresenter.doLogin(phoneNumber.getText().toString(), password.getText().toString());
+                loginPresenter.doLogin(phoneNumber.getText().toString(), password.getText().toString(), LoginActivity.this);
                 break;
             default:
                 break;
@@ -80,6 +85,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
     public void onLoginResult(boolean result, int code, String message) {
         if (result) {
             // 登录成功
+            // 假若MainActivity已经存在于栈中，则需要销毁再重新实例化，这样用户界面得以更新
+            if (CheckUtil.isActivityRunning(this, "MainActivity")) {
+                MainActivity.instance.finish();
+            }
+            // 进入主界面
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

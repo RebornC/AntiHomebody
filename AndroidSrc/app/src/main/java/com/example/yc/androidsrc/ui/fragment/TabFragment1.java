@@ -2,6 +2,7 @@ package com.example.yc.androidsrc.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.model._User;
+import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.GifView;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * @author RebornC
@@ -19,16 +24,20 @@ import com.example.yc.androidsrc.views.GifView;
 
 public class TabFragment1 extends Fragment {
 
+    private _User curUser = BmobUser.getCurrentUser(_User.class);
     private Integer gifViewId = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_1, container, false);
 
-//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-//        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-//        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 //        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        TextView title = (TextView) getActivity().findViewById(R.id.title);
+        title.setText("");
 
         final GifView gifV = (GifView) view.findViewById(R.id.gifview);
         gifV.setGifResource(R.drawable.level_1);
@@ -115,6 +124,27 @@ public class TabFragment1 extends Fragment {
             }
         });
 
+        TextView degree = (TextView) view.findViewById(R.id.degree);
+        degree.setText("Lv." + String.valueOf(curUser.getCurLevel()));
+        TextView exp = (TextView) view.findViewById(R.id.exp);
+        exp.setText(String.valueOf(curUser.getNumerator()) + "/" + String.valueOf(curUser.getDenominator()));
+
         return view;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            // onPause()
+        } else {
+            // onResume()
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+            TextView title = (TextView) getActivity().findViewById(R.id.title);
+            title.setText("");
+        }
+    }
+
 }

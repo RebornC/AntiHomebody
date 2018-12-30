@@ -22,17 +22,17 @@
         android:layout_height="90dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step_walk_arv"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="120dp"/>
 
-    <com.example.yc.androidsrc.views.ImageTextButton
+    <com.example.yc.androidsrc.views.TextButton
         android:id="@+id/stop_count"
         android:background="@drawable/button_shape_2"
         android:layout_width="90dp"
         android:layout_height="90dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step_walk_arv"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="120dp"/>
 
 </android.support.constraint.ConstraintLayout>

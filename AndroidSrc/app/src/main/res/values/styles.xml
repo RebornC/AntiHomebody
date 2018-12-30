@@ -16,6 +16,10 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>
 
 
