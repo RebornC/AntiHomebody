@@ -87,11 +87,6 @@
 
 开始进入编码阶段，完成布局主框架的设计。
 
-同时撰写了以下博客：
-
-> * [Android自定义控件之GifView](https://rebornc.github.io/2018/11/19/Android%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6%E4%B9%8BGifView/)
-> * [Android自定义侧滑抽屉菜单](https://rebornc.github.io/2018/11/28/Android自定义侧滑抽屉菜单/)
-
 ### 2018/12/01 ~ 12/15
 
 完成用户数据后端同步功能与计步器模块。
