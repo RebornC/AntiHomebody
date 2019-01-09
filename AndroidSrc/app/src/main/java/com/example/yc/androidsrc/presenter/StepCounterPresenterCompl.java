@@ -2,8 +2,14 @@ package com.example.yc.androidsrc.presenter;
 
 import android.content.Context;
 
+import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.common.AppConfig;
+import com.example.yc.androidsrc.db.DailyEnergyDao;
+import com.example.yc.androidsrc.db.EnergySourceDao;
 import com.example.yc.androidsrc.db.StepDataDao;
 import com.example.yc.androidsrc.db.UserDataDao;
+import com.example.yc.androidsrc.model.DailyEnergyEntity;
+import com.example.yc.androidsrc.model.EnergySourceEntity;
 import com.example.yc.androidsrc.model.StepEntity;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.impl.IStepCounterPresenter;
@@ -26,7 +32,7 @@ import cn.bmob.v3.listener.UpdateListener;
 public class StepCounterPresenterCompl implements IStepCounterPresenter {
 
     private IStepCounterView iStepCounterView;
-    private int targetStepNumber = 8000;
+    private int targetStepNumber = AppConfig.getTargetStepNumber();
 
     public StepCounterPresenterCompl(IStepCounterView iStepCounterView) {
         this.iStepCounterView = iStepCounterView;
@@ -42,10 +48,12 @@ public class StepCounterPresenterCompl implements IStepCounterPresenter {
     @Override
     public void updateSqlData(Context context, _User curUser, int stepCounts, int energy) {
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String curDate = df.format(new Date());
-            StepEntity stepEntity = new StepEntity(curUser.getObjectId(), curDate, Integer.toString(stepCounts));
+            SimpleDateFormat df_1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat df_2 = new SimpleDateFormat("hh:mm");
+            String curDay = df_1.format(new Date());
+            String curTime = df_2.format(new Date());
             // 更新计步数据表
+            StepEntity stepEntity = new StepEntity(curUser.getObjectId(), curDay, Integer.toString(stepCounts));
             StepDataDao stepDataDao = new StepDataDao(context);
             stepDataDao.addStepDataByUserIdAndDate(stepEntity);
             // 更新用户数据表
@@ -55,6 +63,16 @@ public class StepCounterPresenterCompl implements IStepCounterPresenter {
             curUser.setCurEnergy(newCurEnergy);
             curUser.setTotalEnergy(newTotalEnergy);
             userDataDao.updateUserData(curUser);
+            // 更新动态记录
+            String source = context.getResources().getStringArray(R.array.source_of_energy)[0];
+            EnergySourceEntity energySourceEntity = new EnergySourceEntity
+                    (curUser.getObjectId(), curDay, curTime, energy, source);
+            EnergySourceDao energySourceDao = new EnergySourceDao(context);
+            energySourceDao.addNewData(energySourceEntity);
+            // 更新每日总能量记录
+            DailyEnergyEntity dailyEnergyEntity = new DailyEnergyEntity(curUser.getObjectId(), curDay, energy);
+            DailyEnergyDao dailyEnergyDao = new DailyEnergyDao(context);
+            dailyEnergyDao.addDataByUserIdAndDate(dailyEnergyEntity);
         } finally {
             if (stepCounts > targetStepNumber) {
                 iStepCounterView.onUpdateData(true, "恭喜你达到目标步数，成功领取最大能量值~");

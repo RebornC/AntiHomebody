@@ -145,6 +145,7 @@ public class StepDataDao {
         return dataList;
     }
 
+
     /**
      * 将计步数据展示在图表中
      * 先判断指定用户和指定日期的计步记录是否存在

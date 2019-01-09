@@ -1,5 +1,7 @@
 <resources>
+
     <string name="app_name">非宅</string>
+
     <string-array name="menu_zh">
         <item>成长</item>
         <item>步行</item>
@@ -14,6 +16,13 @@
         <item>COMMNITY</item>
         <item>PERSONAL</item>
     </string-array>
+
+    <string-array name="tab_name">
+        <item>虫洞</item>
+        <item>成长驿站</item>
+        <item>数据监测</item>
+    </string-array>
+
     <string-array name="custom_weekdays">
         <item>日</item>
         <item>一</item>
@@ -23,4 +32,12 @@
         <item>五</item>
         <item>六</item>
     </string-array>
+
+    <string-array name="source_of_energy">
+        <item>计步</item>
+        <item>计划打卡</item>
+        <item>系统奖励</item>
+        <item>系统扣取</item>
+    </string-array>
+
 </resources>

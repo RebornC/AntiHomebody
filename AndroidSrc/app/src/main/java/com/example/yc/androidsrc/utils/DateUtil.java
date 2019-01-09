@@ -1,5 +1,7 @@
 package com.example.yc.androidsrc.utils;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -112,6 +114,30 @@ public class DateUtil {
                 return "六";
         }
         return "";
+    }
+
+    /**
+     * 给出两个日期，例如2019-01-04和2019-01-03
+     * 判断后者是否在前者日期之前
+     *
+     * @param selectedDate
+     * @param curDate
+     * @return
+     */
+    public static boolean isBeforeCurDate(String curDate, String selectedDate) {
+        int curDate_Y = Integer.valueOf(curDate.substring(0, 4));
+        int selectedDate_Y = Integer.valueOf(selectedDate.substring(0, 4));
+        int curDate_M = Integer.valueOf(curDate.substring(5, 7));
+        int selectedDate_M = Integer.valueOf(selectedDate.substring(5, 7));
+        int curDate_D = Integer.valueOf(curDate.substring(8, 10));
+        int selectedDate_D = Integer.valueOf(selectedDate.substring(8, 10));
+        if (curDate_Y > selectedDate_Y) return true;
+        else if (curDate_Y < selectedDate_Y) return false;
+        else if (curDate_M > selectedDate_M) return true;
+        else if (curDate_M < selectedDate_M) return false;
+        else if (curDate_D > selectedDate_D) return true;
+        else if (curDate_D < selectedDate_D) return false;
+        else return false; // 此时日期相等
     }
 
 }

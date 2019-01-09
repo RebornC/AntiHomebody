@@ -21,7 +21,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     // 记录在该台手机登录过的用户的能量与等级情况
-    private static final String TABLE_NAME_0 = "userLevelInfo";
+    private static final String TABLE_NAME_0 = "UserLevelInfo";
 
     // 计步数据表
     private static final String TABLE_NAME_1 = "StepInfo";
@@ -31,13 +31,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     // 通过完成计划领取能量的情况
     // 每个日期最多只能领取一次能量奖励
-    private static final String TABLE_NAME_3 = "energyOfPlan";
+    // 这张数据表记录的日期代表用户在该日期已经领取能量了，无法再领取
+    // 没有记录的日期则代表这天还未领取能量
+    private static final String TABLE_NAME_3 = "EnergyOfPlan";
 
     // 每次领取/扣除能量后都要在这张数据表进行记录，注明能量来源途径
-    private static final String TABLE_NAME_4 = "energyOfStep";
+    private static final String TABLE_NAME_4 = "EnergySource";
 
     // 用户每天获得的总能量，用于检测用户的能量增减情况
-    private static final String TABLE_NAME_5 = "dailyEnergyInfo";
+    private static final String TABLE_NAME_5 = "DailyEnergyInfo";
 
 
     /**
@@ -71,14 +73,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             + "plan text, "
             + "status text);";
 
-    // status "0"：该用户未领取当天的能量；status "1"：该用户已领取当天的能量
     private static final String CREATE_TABLE_3 = "Create Table "
             + TABLE_NAME_3
             + "(_id integer primary key AUTOINCREMENT, "
             + "userId text, "
             + "curDate text, "
-            + "energy integer, "
-            + "status text);";
+            + "energy integer);";
 
     private static final String CREATE_TABLE_4 = "Create Table "
             + TABLE_NAME_4

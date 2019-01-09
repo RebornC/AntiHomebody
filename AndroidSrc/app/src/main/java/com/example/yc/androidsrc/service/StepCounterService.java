@@ -83,9 +83,9 @@ public class StepCounterService extends Service implements SensorEventListener {
         nfIntent = new Intent(this, MainActivity.class);
         nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.person)) // 设置下拉列表中的图标(大图标)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.astronaut_icon)) // 设置下拉列表中的图标(大图标)
                 .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.person) // 设置状态栏内的小图标
+                .setSmallIcon(R.mipmap.astronaut_icon) // 设置状态栏内的小图标
                 .setContentText("非宅正在记录你的运动"); // 设置上下文内容
         // 获取构建好的Notification
         Notification stepNotification = builder.build();
@@ -243,9 +243,9 @@ public class StepCounterService extends Service implements SensorEventListener {
             nfIntent = new Intent(StepCounterService.this, MainActivity.class);
             nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
             builder.setContentIntent(PendingIntent.getActivity(StepCounterService.this, 0, nfIntent, 0)) // 设置PendingIntent
-                    .setLargeIcon(BitmapFactory.decodeResource(StepCounterService.this.getResources(), R.mipmap.person)) // 设置下拉列表中的图标(大图标)
+                    .setLargeIcon(BitmapFactory.decodeResource(StepCounterService.this.getResources(), R.mipmap.astronaut_icon)) // 设置下拉列表中的图标(大图标)
                     .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
-                    .setSmallIcon(R.mipmap.person) // 设置状态栏内的小图标
+                    .setSmallIcon(R.mipmap.astronaut_icon) // 设置状态栏内的小图标
                     .setContentText("非宅正在记录你的运动"); // 设置上下文内容
             // 获取构建好的Notification
             Notification stepNotification = builder.build();

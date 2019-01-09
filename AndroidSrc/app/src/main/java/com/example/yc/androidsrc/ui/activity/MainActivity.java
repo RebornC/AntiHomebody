@@ -23,15 +23,16 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import com.example.yc.androidsrc.ui.fragment.DailyPlanFragment;
+import com.example.yc.androidsrc.ui.fragment.EnergyHouseFragment;
+import com.example.yc.androidsrc.ui.fragment.GrowUpFragment;
 import com.example.yc.androidsrc.ui.fragment.MenuFragment;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.ui.fragment.StepCounterFragment;
-import com.example.yc.androidsrc.ui.fragment.TabFragment1;
-import com.example.yc.androidsrc.ui.fragment.TabFragment3;
 import com.example.yc.androidsrc.ui.fragment.TabFragment4;
 import com.example.yc.androidsrc.ui.fragment.TabFragment5;
+import com.example.yc.androidsrc.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tabFragments.add(new TabFragment1());
+        tabFragments.add(new GrowUpFragment());
         tabFragments.add(new StepCounterFragment());
-        tabFragments.add(new TabFragment3());
+        tabFragments.add(new DailyPlanFragment());
         tabFragments.add(new TabFragment4());
         tabFragments.add(new TabFragment5());
 

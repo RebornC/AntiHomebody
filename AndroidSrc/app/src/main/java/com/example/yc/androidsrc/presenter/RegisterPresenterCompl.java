@@ -1,20 +1,13 @@
 package com.example.yc.androidsrc.presenter;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.yc.androidsrc.app.AppConfig;
+import com.example.yc.androidsrc.common.AppConfig;
 import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.impl.IRegisterPresenter;
-import com.example.yc.androidsrc.ui.activity.MainActivity;
-import com.example.yc.androidsrc.ui.activity.RegisterActivity;
 import com.example.yc.androidsrc.ui.impl.IRegisterView;
 
 import cn.bmob.v3.BmobUser;
@@ -33,7 +26,6 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
 
     private Context context;
     private IRegisterView iRegisterView;
-    private AppConfig app = new AppConfig();
 
     private String msg = "";
     private static final int REGISTER_FAIL_CODE_1 = 1; // 填写不完整
@@ -133,7 +125,7 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
         // 设置初始的等级与能量值
         user.setCurLevel(1);
         user.setNumerator(0);
-        user.setDenominator(app.getLevelEnergy(1));
+        user.setDenominator(AppConfig.getLevelEnergy(1));
         user.setCurEnergy(0);
         user.setTotalEnergy(0);
         user.signUp(new SaveListener<_User>() {

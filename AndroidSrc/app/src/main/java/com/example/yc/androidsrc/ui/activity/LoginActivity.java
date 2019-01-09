@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
     private ILoginPresenter loginPresenter;
 
     private CustomDialog dialog;
-    private GifView progressIcon;
     private EditText phoneNumber;
     private EditText password;
     private Button loginBtn;
@@ -53,8 +52,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
     public void initView() {
         // find view
         dialog = new CustomDialog(this, R.style.CustomDialog);
-        progressIcon = (GifView) findViewById(R.id.progress_icon);
-        progressIcon.setGifPlayCounts(1); // 让动图只播放一次即停止
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         password = (EditText) findViewById(R.id.password);
         loginBtn = (Button) findViewById(R.id.login);

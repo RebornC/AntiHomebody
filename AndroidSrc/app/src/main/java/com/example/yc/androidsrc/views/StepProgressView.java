@@ -13,9 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.yc.androidsrc.R;
-
-import static com.example.yc.androidsrc.R.attr.borderWidth;
-import static com.example.yc.androidsrc.R.attr.thickness;
+import com.example.yc.androidsrc.common.AppConfig;
 
 /**
  * 一个显示步数与进度的圆弧
@@ -35,7 +33,7 @@ public class StepProgressView extends View {
     // 所要绘制的当前步数的蓝色圆弧终点到起点的夹角
     private float currentAngleLength = 0;
     // 当前目标步数
-    private int targetStepNumber = 8000;
+    private int targetStepNumber = AppConfig.getTargetStepNumber();
     // 所走步数
     private String stepCounts = "0";
     // 所走步数（限制不能超过目标步数，以免圆弧画过界）

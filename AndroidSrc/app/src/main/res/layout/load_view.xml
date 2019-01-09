@@ -7,7 +7,7 @@
 
     <com.example.yc.androidsrc.views.GifView
         android:id="@+id/progress_icon"
-        app:gif="@drawable/progress_icon"
+        app:gif="@mipmap/progress_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"/>

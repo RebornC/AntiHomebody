@@ -145,7 +145,8 @@ public class MonthStepFragment extends Fragment {
         lineChart.setDrawGridBackground(false); // 是否展示网格线
         lineChart.setDrawBorders(false); // 是否显示边界
         lineChart.setDragEnabled(false); // 是否可以拖动
-        lineChart.setTouchEnabled(true); //是否有触摸事件
+        lineChart.setTouchEnabled(true); // 是否有触摸事件
+        lineChart.setExtraOffsets(0, 0, 0, 10); // 设置图表距离上下左右的距离
         // 设置XY轴动画效果和属性
         lineChart.animateY(2500);
         lineChart.animateX(1500);
@@ -196,7 +197,7 @@ public class MonthStepFragment extends Fragment {
         // 是否绘制在图表里面
         legend.setDrawInside(false);
         // 采用自定义标签MarkerView
-        LineChartMarkView mv = new LineChartMarkView(getActivity(), R.layout.chart_mark_view, len);
+        LineChartMarkView mv = new LineChartMarkView(getActivity(), R.layout.chart_mark_view_1, len);
         lineChart.setMarkerView(mv);
 
         // 设置图表为自定义渐变色

@@ -4,22 +4,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yc.androidsrc.R;
-import com.example.yc.androidsrc.db.StepDataDao;
-import com.example.yc.androidsrc.model.StepEntity;
+import com.example.yc.androidsrc.common.AppConfig;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.StepCounterPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.IStepCounterPresenter;
@@ -31,9 +28,6 @@ import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.ImageTextButton;
 import com.example.yc.androidsrc.views.StepProgressView;
 import com.example.yc.androidsrc.views.TextButton;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 
@@ -54,17 +48,18 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
     private TextView title;
     private ImageTextButton startCount;
     private TextButton stopCount;
+    private AlertDialog dialog;
 
     private Intent mIntent;
     private StepCounterService stepService;
     private boolean isBind = false; // 是否绑定service
     private boolean isCounting = false; // 是否点击开始计步
     private StepProgressView stepProgressView;
-    private int targetStepNumber = 8000; // 目标步数
+    private int targetStepNumber = AppConfig.getTargetStepNumber(); // 目标步数
     private int currentCounts = 0; // 当前步数
     private int curEnergyValue = 0; // 当前通过计步获得的能量
-    private int maxEnergyValue = 350; // 当步数不低于8000时，获得的能量上限为350
-    private double coefficient = 0.04; // 系数，当步数低于8000时，获得的能量=步数*系数
+    private int maxEnergyValue = AppConfig.getMaxStepEnergy(); // 当步数不低于目标步数时，获得的能量上限为350
+    private double coefficient = AppConfig.getCoefficient(); // 系数，当步数低于目标步数时，获得的能量=步数*系数
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,24 +121,31 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
                 break;
             case R.id.stop_count:
                 if (isCounting && curEnergyValue != 0) {
-                    startCount.setText("开始计步");
-                    startCount.setImageResource(R.drawable.ic_play_arrow_white_24dp);
-                    int flag_1 = currentCounts;
-                    int flag_2 = curEnergyValue;
-                    // 停止服务，当前步数恢复为0
-                    isCounting = false;
-                    getActivity().unbindService(conn);
-                    isBind = false;
-                    getActivity().stopService(mIntent);
-                    setStepAndEnergyValue(0);
-                    // 调用presenter层，将数据记录到数据库中，同时更新到后台
-                    stepCounterPresenter.updateSqlData(getActivity(), curUser, flag_1, flag_2);
-                    stepCounterPresenter.updateBackendData(flag_2);
-                } else if (curEnergyValue == 0) {
+                    popupReceiveEnergyDialog(getActivity());
+                } else if (isCounting) {
                     ToastUtil.showShort(getActivity(), "抱歉，此时没有可领取的能量");
                 } else {
                     ToastUtil.showShort(getActivity(), "还未开始计步，暂无能量可领取");
                 }
+                break;
+            case R.id.btn_cancel_receive:
+                dialog.dismiss();
+                break;
+            case R.id.btn_comfirm_receive:
+                startCount.setText("开始计步");
+                startCount.setImageResource(R.drawable.ic_play_arrow_white_24dp);
+                int flag_1 = currentCounts;
+                int flag_2 = curEnergyValue;
+                // 停止服务，当前步数恢复为0
+                isCounting = false;
+                getActivity().unbindService(conn);
+                isBind = false;
+                getActivity().stopService(mIntent);
+                setStepAndEnergyValue(0);
+                // 调用presenter层，将数据记录到数据库中，同时更新到后台
+                stepCounterPresenter.updateSqlData(getActivity(), curUser, flag_1, flag_2);
+                stepCounterPresenter.updateBackendData(flag_2);
+                dialog.dismiss();
                 break;
             default:
                 break;
@@ -162,6 +164,28 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
         } else {
             stopCount.setEnergyValue(maxEnergyValue);
         }
+    }
+
+    /**
+     * 弹出领取能量值的对话框
+     *
+     * @param context
+     */
+    public void popupReceiveEnergyDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(getActivity(), R.layout.receive_energy_custom_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        TextView energy_value = (TextView) view.findViewById(R.id.energy_value);
+        energy_value.setText(String.valueOf(curEnergyValue));
+        Button btn_cancel_receive = (Button) view.findViewById(R.id.btn_cancel_receive);
+        Button btn_comfirm_receive = (Button) view.findViewById(R.id.btn_comfirm_receive);
+        btn_cancel_receive.setOnClickListener(this);
+        btn_comfirm_receive.setOnClickListener(this);
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(800, 800);
     }
 
     /**

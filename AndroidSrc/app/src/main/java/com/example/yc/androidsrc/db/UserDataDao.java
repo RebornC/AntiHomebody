@@ -23,7 +23,7 @@ public class UserDataDao {
     private SQLiteDatabase db;
     private DBOpenHelper dbOpenHelper;
 
-    private static final String TABLE_NAME_0 = "userLevelInfo";
+    private static final String TABLE_NAME_0 = "UserLevelInfo";
 
     public UserDataDao(Context context) {
         dbOpenHelper = new DBOpenHelper(context);
