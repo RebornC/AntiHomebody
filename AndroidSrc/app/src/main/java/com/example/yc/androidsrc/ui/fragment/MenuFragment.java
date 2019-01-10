@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.yc.androidsrc.model.MenuItem;
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.adapter.MenuItemAdapter;
@@ -32,9 +34,10 @@ import cn.bmob.v3.BmobUser;
 
 public class MenuFragment extends Fragment {
 
-    private _User curUser = BmobUser.getCurrentUser(_User.class);
+    private _User curUser;
 
     private View navView;
+    private ImageView userHead;
     private TextView userNameTv;
     private ListView mListView;
     private List<MenuItem> menuItemList = new ArrayList<>();
@@ -44,7 +47,7 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        navView = inflater.inflate(R.layout.activity_menu, container, false);
+        navView = inflater.inflate(R.layout.fragment_menu, container, false);
 
         initView();
         clickEvents();
@@ -54,6 +57,11 @@ public class MenuFragment extends Fragment {
 
     public void initView() {
         // find view
+        curUser = BmobUser.getCurrentUser(_User.class);
+        userHead = (ImageView) navView.findViewById(R.id.user_head);
+        if (curUser.getHeadPortrait() != null) {
+            Glide.with(getActivity()).load(curUser.getHeadPortrait().getFileUrl()).into(userHead);
+        }
         userNameTv = (TextView) navView.findViewById(R.id.user_name);
         userNameTv.setText(curUser.getUsername());
         mListView = (ListView) navView.findViewById(R.id.menu_list_view);

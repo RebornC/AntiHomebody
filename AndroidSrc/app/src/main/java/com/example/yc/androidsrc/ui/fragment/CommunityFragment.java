@@ -17,11 +17,11 @@ import com.example.yc.androidsrc.R;
  * Created on 2018/11/28.
  */
 
-public class TabFragment4 extends Fragment {
+public class CommunityFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab_fragment_4, container, false);
+        View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#e2e7d3"));

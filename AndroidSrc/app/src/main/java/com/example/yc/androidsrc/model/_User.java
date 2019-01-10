@@ -11,6 +11,7 @@ import cn.bmob.v3.datatype.BmobFile;
 public class _User extends BmobUser {
 
     private BmobFile headPortrait; // 用户头像
+    private String signature; // 签名
     private Integer curLevel; // 当前等级
     private Integer numerator; // 当前进度条上的分子
     private Integer denominator; // 当前进度条的分母，即从当前等级升到下一级所需要的总能量
@@ -30,6 +31,10 @@ public class _User extends BmobUser {
 
     public void setheadPortrait(BmobFile headPortrait) {
         this.headPortrait = headPortrait;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public void setCurLevel(Integer curLevel) {
@@ -54,6 +59,10 @@ public class _User extends BmobUser {
 
     public BmobFile getHeadPortrait() {
         return headPortrait;
+    }
+
+    public String getSignature() {
+        return signature;
     }
 
     public Integer getCurLevel() {

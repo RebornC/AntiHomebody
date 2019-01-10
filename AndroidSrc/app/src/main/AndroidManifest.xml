@@ -39,7 +39,7 @@
         <activity android:name=".ui.activity.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.StepChartActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.SQLdataActivity" android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.activity.UserSettingsActivity" android:screenOrientation="portrait" />
         <service
             android:name=".service.StepCounterService"
             android:priority="1000"

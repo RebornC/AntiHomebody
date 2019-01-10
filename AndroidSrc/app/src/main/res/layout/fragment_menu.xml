@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/user_head"
         android:src="@mipmap/head"
         android:background="@drawable/image_border"
         android:padding="3dp"

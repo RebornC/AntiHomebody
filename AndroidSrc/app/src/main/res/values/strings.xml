@@ -13,7 +13,7 @@
         <item>GROW UP</item>
         <item>STEP COUNTER</item>
         <item>DAILY PLAN</item>
-        <item>COMMNITY</item>
+        <item>COMMUNITY</item>
         <item>PERSONAL</item>
     </string-array>
 
@@ -39,5 +39,7 @@
         <item>系统奖励</item>
         <item>系统扣取</item>
     </string-array>
+
+    <string name="default_signature">遇见更好的自己</string>
 
 </resources>

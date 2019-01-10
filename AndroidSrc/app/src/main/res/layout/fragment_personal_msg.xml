@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/whiteSmoke"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="76dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:background="@color/offWhite"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/head_bg"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_head"
+                android:src="@mipmap/head"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/offWhite"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="20dp" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:textSize="16sp"
+                android:textColor="@color/offWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/user_head"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/head_bg"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/user_signature"
+                android:text="@string/default_signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/user_head"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/user_head"
+                android:layout_marginBottom="10dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <ListView
+            android:id="@+id/setting_list_view"
+            android:background="@color/offWhite"
+            android:footerDividersEnabled="false"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+        <Button
+            android:id="@+id/btn1"
+            android:text="改名"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:text="退出登录"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn3"
+            android:text="跳转数据库"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn4"
+            android:text="同步到云端"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn5"
+            android:text="账号资料"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="JUST TRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
