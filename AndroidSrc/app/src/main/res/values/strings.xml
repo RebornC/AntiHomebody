@@ -35,9 +35,15 @@
 
     <string-array name="source_of_energy">
         <item>计步</item>
-        <item>计划打卡</item>
+        <item>打卡</item>
         <item>系统奖励</item>
-        <item>系统扣取</item>
+        <item>系统扣罚</item>
+    </string-array>
+
+    <string-array name="evaluation">
+        <item>由于分数过低，系统将扣罚50能量值</item>
+        <item>分数处于平稳区间，要继续加油喔</item>
+        <item>由于表现积极，系统将奖励50能量值</item>
     </string-array>
 
     <string name="default_signature">遇见更好的自己</string>

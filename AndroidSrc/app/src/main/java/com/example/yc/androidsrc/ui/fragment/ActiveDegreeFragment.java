@@ -1,6 +1,7 @@
 package com.example.yc.androidsrc.ui.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -273,6 +274,7 @@ public class ActiveDegreeFragment extends Fragment implements IGrowUpView, View.
             lineChart.invalidate();
         }
     }
+
 
     @Override
     public void onUpdateData(boolean result, int resultCode, String message) {

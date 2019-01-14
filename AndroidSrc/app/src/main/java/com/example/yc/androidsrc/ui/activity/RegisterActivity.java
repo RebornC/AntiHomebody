@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
 
     private IRegisterPresenter registerPresenter;
 
-    private EditText userName;
+    private EditText nickName;
     private EditText phoneNumber;
     private EditText password;
     private EditText confirmPassword;
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
     public void initView() {
         // find view
         dialog = new CustomDialog(this, R.style.CustomDialog);
-        userName = (EditText) findViewById(R.id.user_name);
+        nickName = (EditText) findViewById(R.id.user_name);
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirm_password);
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                registerPresenter.doRegister(userName.getText().toString(), phoneNumber.getText().toString(),
+                registerPresenter.doRegister(nickName.getText().toString(), phoneNumber.getText().toString(),
                         password.getText().toString(), confirmPassword.getText().toString());
                 break;
             default:
@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
     public void onShowLoginDialog(boolean isLogin) {
         // 选择登录
         if (isLogin)
-            registerPresenter.doLogin(userName.getText().toString(), password.getText().toString(), RegisterActivity.this);
+            registerPresenter.doLogin(phoneNumber.getText().toString(), password.getText().toString(), RegisterActivity.this);
     }
 
     @Override

@@ -11,6 +11,7 @@ import cn.bmob.v3.datatype.BmobFile;
 public class _User extends BmobUser {
 
     private BmobFile headPortrait; // 用户头像
+    private String nickName; // 昵称
     private String signature; // 签名
     private Integer curLevel; // 当前等级
     private Integer numerator; // 当前进度条上的分子
@@ -29,8 +30,12 @@ public class _User extends BmobUser {
         this.totalEnergy = totalEnergy;
     }
 
-    public void setheadPortrait(BmobFile headPortrait) {
+    public void setHeadPortrait(BmobFile headPortrait) {
         this.headPortrait = headPortrait;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public void setSignature(String signature) {
@@ -59,6 +64,10 @@ public class _User extends BmobUser {
 
     public BmobFile getHeadPortrait() {
         return headPortrait;
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 
     public String getSignature() {

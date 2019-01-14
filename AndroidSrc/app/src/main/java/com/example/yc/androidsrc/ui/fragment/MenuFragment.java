@@ -63,7 +63,7 @@ public class MenuFragment extends Fragment {
             Glide.with(getActivity()).load(curUser.getHeadPortrait().getFileUrl()).into(userHead);
         }
         userNameTv = (TextView) navView.findViewById(R.id.user_name);
-        userNameTv.setText(curUser.getUsername());
+        userNameTv.setText(curUser.getNickName());
         mListView = (ListView) navView.findViewById(R.id.menu_list_view);
         mListView.setDivider(null);
         // init ListView
@@ -99,4 +99,14 @@ public class MenuFragment extends Fragment {
         adapter.changeSelected(position);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 刷新数据
+        curUser = BmobUser.getCurrentUser(_User.class);
+        if (curUser.getHeadPortrait() != null) {
+            Glide.with(getActivity()).load(curUser.getHeadPortrait().getFileUrl()).into(userHead);
+        }
+        userNameTv.setText(curUser.getNickName());
+    }
 }

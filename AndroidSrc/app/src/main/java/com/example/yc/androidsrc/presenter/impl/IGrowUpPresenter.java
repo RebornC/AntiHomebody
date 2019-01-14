@@ -20,4 +20,9 @@ public interface IGrowUpPresenter {
     int getUserDailyEnergyData(Context context, String userId, String curDate);
     int getTotalStepByDateList(Context context, String userId, List<String> dateList);
     int getTotalPlanByDateList(Context context, String userId, List<String> dateList);
+    String queryFirstLoginDate(Context context, String userId);
+    boolean loginToday(Context context, String userId);
+    void addLoginData(Context context, String userId);
+    void rewardEnergy(Context context, _User curUser, int energy);
+    void punishEnergy(Context context, _User curUser, int energy);
 }

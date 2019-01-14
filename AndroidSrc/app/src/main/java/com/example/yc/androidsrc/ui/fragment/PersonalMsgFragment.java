@@ -55,9 +55,18 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     private TextView userName;
     private TextView userSignature;
 
+    private ListView introListView;
+    private SimpleAdapter introAdapter;
+    private List<Map<String,Object>> introlistData;
+
     private ListView settingListView;
     private SimpleAdapter settingAdapter;
     private List<Map<String,Object>> settinglistData;
+
+    private static final String key = "CODE";
+    private static final int AccseeUserSettingsActivity = 0;
+    private static final int UPLOAD_HEADPORTRAIT_CODE = 1; // 上传头像
+    private static final int UPLOAD_MESSAGE_CODE = 2; // 上传其他用户信息
 
     @Nullable
     @Override
@@ -66,20 +75,8 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
 
         initView();
 
-        Button btn1 = (Button) view.findViewById(R.id.btn1);
-        btn1.setOnClickListener(this);
-
-        Button btn2 = (Button) view.findViewById(R.id.btn2);
-        btn2.setOnClickListener(this);
-
         Button btn3 = (Button) view.findViewById(R.id.btn3);
         btn3.setOnClickListener(this);
-
-        Button btn4 = (Button) view.findViewById(R.id.btn4);
-        btn4.setOnClickListener(this);
-
-        Button btn5 = (Button) view.findViewById(R.id.btn5);
-        btn4.setOnClickListener(this);
 
         return view;
     }
@@ -98,13 +95,41 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
             Glide.with(getActivity()).load(curUser.getHeadPortrait().getFileUrl()).into(userHead);
         }
         userName = (TextView) view.findViewById(R.id.user_name);
-        userName.setText(curUser.getUsername());
+        userName.setText(curUser.getNickName());
         userSignature = (TextView) view.findViewById(R.id.user_signature);
         if (curUser.getSignature() != null) {
             userSignature.setText(curUser.getSignature());
         }
 
-        // 初始化列表
+        // 初始化列表1
+        introListView = (ListView) view.findViewById(R.id.intro_list_view);
+        introlistData = new ArrayList<>();
+        Integer[] intro_list_icon_id = {R.mipmap.book_icon, R.mipmap.compass_icon};
+        String[] intro_list_text = {"关于非宅", "用户指南"};
+        for (int i = 0; i < 2; i++) {
+            Map<String,Object> temp = new LinkedHashMap<>();
+            temp.put("icon", intro_list_icon_id[i]);
+            temp.put("text", intro_list_text[i]);
+            introlistData.add(temp);
+        }
+        introAdapter = new SimpleAdapter(getActivity(), introlistData, R.layout.list_view_item_1, new String[] {"icon","text"}, new int[] {R.id.icon, R.id.text});
+        introListView.setAdapter(introAdapter);
+        setListViewHeightBasedOnChildren(introListView, introAdapter);
+        introListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        ToastUtil.showShort(getActivity(), "关于非宅");
+                        break;
+                    case 1:
+                        ToastUtil.showShort(getActivity(), "用户指南");
+                        break;
+                }
+            }
+        });
+
+        // 初始化列表2
         settingListView = (ListView) view.findViewById(R.id.setting_list_view);
         settinglistData = new ArrayList<>();
         Integer[] settings_list_icon_id = {R.drawable.ic_settings_24dp, R.drawable.ic_cloud_queue_24dp, R.drawable.ic_power_settings_new_24dp};
@@ -123,9 +148,11 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(getActivity(), UserSettingsActivity.class));
+                        Intent intent = new Intent(getActivity(), UserSettingsActivity.class);
+                        startActivityForResult(intent, AccseeUserSettingsActivity);
                         break;
                     case 1:
+                        personalMsgPresenter.syncBackend(getActivity());
                         break;
                     case 2:
                         personalMsgPresenter.logOut();
@@ -139,61 +166,10 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.btn1:
-                // 改名
-//                final _User p2 = new _User();
-//                p2.setUsername(name.getText().toString());
-//                p2.update(objectId, new UpdateListener() {
-//
-//                    @Override
-//                    public void done(BmobException e) {
-//                        if(e==null){
-//                            ToastUtil.showShort(getActivity(), "改名成功:"+p2.getUpdatedAt());
-//                        }else{
-//                            ToastUtil.showShort(getActivity(), "改名失败：" + e.getMessage());
-//                        }
-//                    }
-//
-//                });
-//                break;
-//            case R.id.btn2:
-//                // 退出登录，同时清除缓存用户对象
-//                BmobUser.logOut();
-//                Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                startActivity(intent);
-//                break;
-//            case R.id.btn3:
-//                Intent it = new Intent(getActivity(), SQLdataActivity.class);
-//                startActivity(it);
-//                break;
-//            case R.id.btn4:
-//                /**
-//                 * 有时候会因为网络问题导致云端数据与本地数据不一致
-//                 * 比如本地数据更新了，云端数据却因为没网而无法更新
-//                 * 所以增加这个功能，防止这个情况
-//                 */
-//                _User curUser = BmobUser.getCurrentUser(_User.class);
-//                String objectId = curUser.getObjectId();
-//                UserDataDao userDataDao = new UserDataDao(getActivity());
-//                _User sqlUser = userDataDao.getUserDataById(objectId);
-//                curUser.setCurLevel(sqlUser.getCurLevel());
-//                curUser.setNumerator(sqlUser.getNumerator());
-//                curUser.setDenominator(sqlUser.getDenominator());
-//                curUser.setCurEnergy(sqlUser.getCurEnergy());
-//                curUser.setTotalEnergy(sqlUser.getTotalEnergy());
-//                curUser.update(objectId, new UpdateListener() {
-//                    @Override
-//                    public void done(BmobException e) {
-//                        if (e == null) {
-//                            ToastUtil.showShort(getActivity(), "同步成功");
-//                        } else {
-//                            ToastUtil.showShort(getActivity(), "同步失败");
-//                        }
-//                    }
-//                });
-//                break;
-//            case R.id.btn5:
-//                break;
+            case R.id.btn3:
+                Intent it = new Intent(getActivity(), SQLdataActivity.class);
+                startActivity(it);
+                break;
         }
     }
 
@@ -220,6 +196,11 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     }
 
     @Override
+    public void onUpdateData(boolean result, int resultCode, String message) {
+        ToastUtil.showShort(getActivity(), message);
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
@@ -232,4 +213,25 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 判断用户数据是否变化，若变化则刷新界面
+        if (requestCode == AccseeUserSettingsActivity && resultCode == getActivity().RESULT_OK) {
+            Bundle bundle = data.getBundleExtra(key);
+            List<Integer> codeList = bundle.getIntegerArrayList(key);
+            if (codeList.contains(UPLOAD_HEADPORTRAIT_CODE)) {
+                curUser = BmobUser.getCurrentUser(_User.class);
+                if (curUser.getHeadPortrait() != null) {
+                    Glide.with(getActivity()).load(curUser.getHeadPortrait().getFileUrl()).into(userHead);
+                }
+            }
+            if (codeList.contains(UPLOAD_MESSAGE_CODE)) {
+                curUser = BmobUser.getCurrentUser(_User.class);
+                userName.setText(curUser.getNickName());
+                if (curUser.getSignature() != null) {
+                    userSignature.setText(curUser.getSignature());
+                }
+            }
+        }
+    }
 }

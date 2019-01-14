@@ -1,6 +1,7 @@
 package com.example.yc.androidsrc.ui.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.common.DataMonitor;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.GrowUpPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.IGrowUpPresenter;
 import com.example.yc.androidsrc.ui.impl.IGrowUpView;
 import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.GifView;
+import com.github.mikephil.charting.data.Entry;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 
@@ -53,16 +63,21 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
     private int denominator;
     private int numerator;
     private int curEnergy;
+    private int activeLevel;
 
-    private static final int LEVAL_CHANGE_CODE_0 = 0; // 用户等级不变
-    private static final int LEVAL_CHANGE_CODE_1 = 1; // 用户等级发生变化
+    private static final int LEVEL_CHANGE_CODE_0 = 0; // 用户等级不变
+    private static final int LEVEL_CHANGE_CODE_1 = 1; // 用户等级发生变化，升级
     private static final int UPDATE_BACKEND_CODE = 2; // 更新至后端
+    private static final int REWARD_ENERGY = 3; // 奖励能量值
+    private static final int PUNISH_ENERGY = 4; // 扣罚能量值
+    private static final int LEVEL_CHANGE_CODE_2 = 5; // 用户等级发生变化，降级
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_energy_house, container, false);
         initView();
         initValue();
+        getUserEnergyData();
         return view;
     }
 
@@ -98,6 +113,55 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         progressBar.setProgress(numerator);
         exp.setText(String.valueOf(numerator) + "/" + String.valueOf(denominator));
         energyValue.setText(String.valueOf(curEnergy));
+    }
+
+
+    /**
+     * 在用户创建账号满7天的情况下
+     * (由于User.getCreatedAt()返回空值？所以先用数据库中本地登录数据代替
+     * 每天首日登录会核算过去7天的活跃度
+     * 根据评测分数进行奖罚
+     */
+    public void getUserEnergyData() {
+        // 最近七天（不包含当天）
+        List<String> dateList = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for (int i = 0 ; i < 7 + 1; i++) {
+            // 获取当前日历的日期的星期数（比如1:星期天）
+            int week_index = cal.get(Calendar.DAY_OF_WEEK);
+            Date date = cal.getTime();
+            // 日期格式化 yyyy-MM-dd
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = formatter.format(date);
+            if (i != 0) {
+                dateList.add(dateString);
+            }
+            // 将日历日期往前推1天
+            cal.add(cal.DATE, -1);
+        }
+        // 翻转数组
+        Collections.reverse(dateList);
+        // 判断当天首次登录信息是否写进数据库，没有的话则写入，同时弹出活跃度检测结果
+        if (!growUpPresenter.loginToday(getActivity(), curUser.getObjectId())) {
+            growUpPresenter.addLoginData(getActivity(), curUser.getObjectId());
+            // ToastUtil.showShort(getActivity(), growUpPresenter.queryFirstLoginDate(getActivity(), curUser.getObjectId()));
+            if (dateList.contains(growUpPresenter.queryFirstLoginDate(getActivity(), curUser.getObjectId()))) {
+                // 此时本地登录未满7天，不应该进行活跃度检测
+            } else {
+                // 此时本地登录已满7天，进行活跃度检测，弹出对话框
+            }
+            //----这部分到时移入上面else框内--------------------
+            List<Integer> dailyEnergy = new ArrayList<>();
+            for (int i = 0; i < dateList.size(); i++) {
+                int energyValue = growUpPresenter.getUserDailyEnergyData(getActivity(), curUser.getObjectId(), dateList.get(i));
+                dailyEnergy.add(energyValue);
+            }
+            // 进行数据评估，返回相关结果
+            activeLevel = DataMonitor.estimate(dailyEnergy).get(0);
+            // 当天初次登录弹出提示活跃度的对话框
+            popupActiveDialog(getActivity());
+            //----------------------------------------
+        }
     }
 
 
@@ -205,10 +269,39 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
     }
 
 
+    /**
+     * 弹出提示活跃度的对话框
+     *
+     * @param context
+     */
+    public void popupActiveDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(getActivity(), R.layout.user_state_custom_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        TextView level = (TextView) view.findViewById(R.id.active_level);
+        level.setText(String.valueOf(activeLevel));
+        TextView evaluation = (TextView) view.findViewById(R.id.evaluation);
+        evaluation.setText(DataMonitor.getEvaluationByScore(getActivity(), activeLevel));
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(800, 800);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                int result = DataMonitor.getResultByScore(activeLevel);
+                if (result > 0) growUpPresenter.rewardEnergy(getActivity(), curUser, result);
+                else if (result < 0) growUpPresenter.punishEnergy(getActivity(), curUser, result);
+            }
+        });
+    }
+
+
     @Override
     public void onUpdateData(boolean result, int resultCode, String message) {
         initValue();
-        if (result && resultCode == LEVAL_CHANGE_CODE_1) {
+        if (result && resultCode == LEVEL_CHANGE_CODE_1) {
             // 进行升级
             // 先让界面出现2秒钟的缓冲图形，然后再出现对应的形象动图，弹出提示框
             gifV.setVisibility(View.GONE);
@@ -223,8 +316,19 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
                 }
             };
             handle.postDelayed(runnable, 2000);
-        } else if (result && resultCode == UPDATE_BACKEND_CODE) {
-            // ToastUtil.showShort(getActivity(), message);
+        } else if (result && resultCode == LEVEL_CHANGE_CODE_2) {
+            // 进行降级
+            gifV.setVisibility(View.GONE);
+            avLoadingIndicatorView.setVisibility(View.VISIBLE);
+            Handler handle = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    avLoadingIndicatorView.setVisibility(View.GONE);
+                    gifV.setVisibility(View.VISIBLE);
+                }
+            };
+            handle.postDelayed(runnable, 2000);
         }
     }
 }

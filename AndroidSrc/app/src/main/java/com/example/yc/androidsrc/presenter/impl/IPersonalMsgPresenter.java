@@ -14,4 +14,8 @@ import com.example.yc.androidsrc.model._User;
 
 public interface IPersonalMsgPresenter {
     void logOut();
+    void uploadHeadPortrait(String uri);
+    void modifyUserNickname(String newName);
+    void modifyUserSignature(String newSignature);
+    void syncBackend(Context context);
 }

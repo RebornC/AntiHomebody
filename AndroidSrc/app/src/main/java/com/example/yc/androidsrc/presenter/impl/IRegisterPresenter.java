@@ -10,7 +10,7 @@ import android.content.Context;
  */
 
 public interface IRegisterPresenter {
-    void doRegister(String username, String phone, String psd, String confirmPsd);
+    void doRegister(String nickname, String phone, String psd, String confirmPsd);
     void setProgressDialogVisibility(boolean visibility);
     void showLoginDialog(Context context);
     void doLogin(String username, String psd, Context context);

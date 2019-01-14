@@ -40,10 +40,10 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     }
 
     @Override
-    public void doRegister(String username, String phone, String psd, String confirmPsd) {
-        if (checkInput(username, phone, psd, confirmPsd)) {
+    public void doRegister(String nickname, String phone, String psd, String confirmPsd) {
+        if (checkInput(nickname, phone, psd, confirmPsd)) {
             // 填写正确，进行用户注册，同时显示缓冲界面
-            signUp(username, phone, psd);
+            signUp(nickname, phone, psd);
             iRegisterView.onSetProgressDialogVisibility(true);
         }
     }
@@ -101,8 +101,8 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     /**
      * 检查输入是否符合要求
      */
-    public boolean checkInput(String username, String phone, String psd, String confirmPsd) {
-        if (!username.equals("") && !phone.equals("") && !psd.equals("") && !confirmPsd.equals("")) {
+    public boolean checkInput(String nickname, String phone, String psd, String confirmPsd) {
+        if (!nickname.equals("") && !phone.equals("") && !psd.equals("") && !confirmPsd.equals("")) {
             if (!psd.equals(confirmPsd)) {
                 iRegisterView.onRegisterResult(false, REGISTER_FAIL_CODE_2, msg);
                 return false;
@@ -117,9 +117,10 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     /**
      * 账号密码注册
      */
-    private void signUp(String username, String phone, String psd) {
+    private void signUp(String nickname, String phone, String psd) {
         final _User user = new _User();
-        user.setUsername(username);
+        user.setUsername(phone); // 使用phone作为username唯一标识
+        user.setNickName(nickname);
         user.setMobilePhoneNumber(phone);
         user.setPassword(psd);
         // 设置初始的等级与能量值
@@ -135,7 +136,10 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
                 if (e == null) {
                     iRegisterView.onRegisterResult(true, REGISTER_SUCCESS_CODE, msg);
                 } else {
-                    iRegisterView.onRegisterResult(false, REGISTER_FAIL_CODE_3, e.getMessage());
+                    if (e.getErrorCode() == 202)
+                        iRegisterView.onRegisterResult(false, REGISTER_FAIL_CODE_3, "该手机号码已被注册");
+                    else
+                        iRegisterView.onRegisterResult(false, REGISTER_FAIL_CODE_3, e.getMessage());
                 }
             }
         });

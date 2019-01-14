@@ -1,7 +1,11 @@
 package com.example.yc.androidsrc.common;
 
 
+import android.content.Context;
 import android.util.Log;
+
+import com.bumptech.glide.load.engine.Resource;
+import com.example.yc.androidsrc.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +81,37 @@ public class DataMonitor {
         result.add((int) scoreOfAver);
 
         return result;
+    }
+
+    /**
+     * 根据活跃度返回对应的评价
+     *
+     * @param context
+     * @param score
+     * @return
+     */
+    public static String getEvaluationByScore(Context context, int score) {
+        if (score < 30)
+            return context.getResources().getStringArray(R.array.evaluation)[0];
+        else if (score > 70)
+            return context.getResources().getStringArray(R.array.evaluation)[2];
+        else
+            return context.getResources().getStringArray(R.array.evaluation)[1];
+    }
+
+    /**
+     * 根据活跃度返回相应的能量值奖罚
+     *
+     * @param score
+     * @return
+     */
+    public static int getResultByScore(int score) {
+        if (score < 30)
+            return -50;
+        else if (score > 70)
+            return 50;
+        else
+            return 0;
     }
 
 }

@@ -41,6 +41,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     // 用户每天获得的总能量，用于检测用户的能量增减情况
     private static final String TABLE_NAME_5 = "DailyEnergyInfo";
 
+    // 用户在该天是否已经登录过（仅限于本地手机）
+    private static final String TABLE_NAME_6 = "LocalLoginInfo";
+
+    // “碎碎念”模块的文本数据存储
+    private static final String TABLE_NAME_7 = "SelfTalkingInfo";
+
 
     /**
      * 执行SQL语句创建数据表
@@ -96,6 +102,19 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             + "curDate text, "
             + "energy integer);";
 
+    private static final String CREATE_TABLE_6 = "Create Table "
+            + TABLE_NAME_6
+            + "(_id integer primary key AUTOINCREMENT, "
+            + "userId text, "
+            + "curDate text);";
+
+    private static final String CREATE_TABLE_7 = "Create Table "
+            + TABLE_NAME_7
+            + "(_id integer primary key AUTOINCREMENT, "
+            + "userId text, "
+            + "curDate text, "
+            + "selfTalking text);";
+
     public DBOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -108,10 +127,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_3);
         db.execSQL(CREATE_TABLE_4);
         db.execSQL(CREATE_TABLE_5);
+        db.execSQL(CREATE_TABLE_6);
+        db.execSQL(CREATE_TABLE_7);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 }

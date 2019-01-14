@@ -6,4 +6,5 @@ package com.example.yc.androidsrc.ui.impl;
  */
 
 public interface IPersonalMsgView {
+    void onUpdateData(boolean result, int resultCode, String message);
 }

@@ -51,6 +51,7 @@ public class GrowUpFragment extends Fragment implements IGrowUpView, View.OnClic
     private ImageView rocket;
     private TextView tabTitle;
     private String[] tabName;
+    private WormholeFragment wormholeFragment;
     private EnergyHouseFragment energyHouseFragment;
     private ActiveDegreeFragment activeDegreeFragment;
 
@@ -83,9 +84,10 @@ public class GrowUpFragment extends Fragment implements IGrowUpView, View.OnClic
         // ViewPager设置
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         fragmentList = new ArrayList<>();
+        wormholeFragment = new WormholeFragment();
         energyHouseFragment = new EnergyHouseFragment();
         activeDegreeFragment = new ActiveDegreeFragment();
-        fragmentList.add(new EnergyHouseFragment());
+        fragmentList.add(wormholeFragment);
         fragmentList.add(energyHouseFragment);
         fragmentList.add(activeDegreeFragment);
         titleList = new ArrayList<>();
