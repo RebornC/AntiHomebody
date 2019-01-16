@@ -232,13 +232,12 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
             case R.id.title:
                 break;
             case R.id.fab:
-                if (!curDate.equals(selectedDate)) {
-                    if (DateUtil.isBeforeCurDate(curDate, selectedDate))
-                        ToastUtil.showShort(getActivity(), "过去");
-                    else
-                        ToastUtil.showShort(getActivity(), "未来");
+                if (!curDate.equals(selectedDate) && DateUtil.isBeforeCurDate(curDate, selectedDate)) {
+                    // 该日期在当天之前
+                    ToastUtil.showShort(getActivity(), "不能为过去的日子新增计划");
+                } else {
+                    popupAddPlanDialog(getActivity());
                 }
-                popupAddPlanDialog(getActivity());
                 break;
             case R.id.btn_cancel:
                 dialog.dismiss();
@@ -258,6 +257,9 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
             case R.id.receive_energy_icon:
                 if (hasReceived) {
                     ToastUtil.showShort(getActivity(), "你已经领取过该能量值了");
+                } else if (!curDate.equals(selectedDate) && !DateUtil.isBeforeCurDate(curDate, selectedDate)) {
+                    // 该日期在当天之后，不能提前领取
+                    ToastUtil.showShort(getActivity(), "诶？未来的能量值还是等到那天再领取吧");
                 } else {
                     popupReceiveEnergyDialog(getActivity());
                 }
@@ -266,8 +268,12 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
                 dialog.dismiss();
                 break;
             case R.id.btn_comfirm_receive:
-                receiveEnergy();
-                dialog.dismiss();
+                if (energyValue == 0) {
+                    ToastUtil.showShort(getActivity(), "抱歉，暂无可领取的能量");
+                } else {
+                    receiveEnergy();
+                    dialog.dismiss();
+                }
                 break;
             default:
                 break;
@@ -406,7 +412,6 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
     @Override
     public void onUpdateData(boolean result, String message) {
         initDailyPlan();
-        ToastUtil.showShort(getActivity(), message);
     }
 
 

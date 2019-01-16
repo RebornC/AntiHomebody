@@ -25,4 +25,5 @@ public interface IGrowUpPresenter {
     void addLoginData(Context context, String userId);
     void rewardEnergy(Context context, _User curUser, int energy);
     void punishEnergy(Context context, _User curUser, int energy);
+    void addNewSelfTalking(Context context, _User curUser, String text);
 }

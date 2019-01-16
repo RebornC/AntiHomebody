@@ -126,8 +126,9 @@ public class MonthStepFragment extends Fragment {
         set.setDrawValues(false); // 设置显示数据点值
         set.setValueTextColor(getResources().getColor(R.color.colorAccent)); // 设置显示值的字体颜色
         set.setValueTextSize(12); // 设置显示值的字体大小
-        // set.setCircleColorHole(getResources().getColor(R.color.colorAccent));
-        set.setCircleColor(getResources().getColor(R.color.colorAccent));
+        set.setCircleSize(Float.valueOf("1.5"));
+        set.setCircleColorHole(getResources().getColor(R.color.colorAccent));
+        set.setCircleColor(getResources().getColor(R.color.whiteSmoke));
         set.setHighLightColor(getResources().getColor(R.color.transparent)); // 设置点击交点后显示交高亮线的颜色
         set.setHighlightEnabled(true); // 是否使用点击高亮线
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER); // 设置曲线展示为圆滑曲线（如果不设置则默认折线）

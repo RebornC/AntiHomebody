@@ -133,6 +133,4 @@
         app:layout_constraintBottom_toTopOf="@id/wechat"
         android:layout_marginBottom="30dp"/>
 
-
-
 </android.support.constraint.ConstraintLayout>

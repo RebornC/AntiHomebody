@@ -205,6 +205,10 @@ public class GrowUpFragment extends Fragment implements IGrowUpView, View.OnClic
             // onResume()
             toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             title.setText("");
+            // 注意此时viewpager处于不同的fragment时，toolbar也有变化
+            if (viewPager.getCurrentItem() == 0) {
+                wormholeFragment.setUserVisibleHint(true);
+            }
             // 因为此时用户的能量值可能发生了变化，所以要刷新energyHouseFragment中的数据
             energyHouseFragment.initValue();
         }

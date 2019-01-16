@@ -4,27 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yc.androidsrc.R;
-import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.PersonalMsgPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.IPersonalMsgPresenter;
+import com.example.yc.androidsrc.ui.activity.DynamicActivity;
 import com.example.yc.androidsrc.ui.activity.LoginActivity;
-import com.example.yc.androidsrc.ui.activity.SQLdataActivity;
+import com.example.yc.androidsrc.ui.activity.SelfTalkingActivity;
 import com.example.yc.androidsrc.ui.activity.UserSettingsActivity;
 import com.example.yc.androidsrc.ui.impl.IPersonalMsgView;
 import com.example.yc.androidsrc.utils.ToastUtil;
@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author RebornC
@@ -54,6 +52,10 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     private ImageView userHead;
     private TextView userName;
     private TextView userSignature;
+    private AlertDialog dialog;
+
+    private LinearLayout dynamic;
+    private LinearLayout wormhole;
 
     private ListView introListView;
     private SimpleAdapter introAdapter;
@@ -72,12 +74,7 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_personal_msg, container, false);
-
         initView();
-
-        Button btn3 = (Button) view.findViewById(R.id.btn3);
-        btn3.setOnClickListener(this);
-
         return view;
     }
 
@@ -100,6 +97,11 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
         if (curUser.getSignature() != null) {
             userSignature.setText(curUser.getSignature());
         }
+
+        dynamic = (LinearLayout) view.findViewById(R.id.dynamic);
+        dynamic.setOnClickListener(this);
+        wormhole = (LinearLayout) view.findViewById(R.id.wormhole);
+        wormhole.setOnClickListener(this);
 
         // 初始化列表1
         introListView = (ListView) view.findViewById(R.id.intro_list_view);
@@ -152,11 +154,10 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
                         startActivityForResult(intent, AccseeUserSettingsActivity);
                         break;
                     case 1:
-                        personalMsgPresenter.syncBackend(getActivity());
+                        popupSyncDialog();
                         break;
                     case 2:
-                        personalMsgPresenter.logOut();
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        popupLogoutDialog();
                         break;
                 }
             }
@@ -166,9 +167,26 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn3:
-                Intent it = new Intent(getActivity(), SQLdataActivity.class);
-                startActivity(it);
+            case R.id.dynamic:
+                startActivity(new Intent(getActivity(), DynamicActivity.class));
+                break;
+            case R.id.wormhole:
+                startActivity(new Intent(getActivity(), SelfTalkingActivity.class));
+                break;
+            case R.id.btn_cancel_sync:
+                dialog.dismiss();
+                break;
+            case R.id.btn_comfirm_sync:
+                personalMsgPresenter.syncBackend(getActivity());
+                dialog.dismiss();
+                break;
+            case R.id.btn_cancel_logout:
+                dialog.dismiss();
+                break;
+            case R.id.btn_comfirm_logout:
+                personalMsgPresenter.logOut();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                dialog.dismiss();
                 break;
         }
     }
@@ -195,6 +213,38 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
         listView.setLayoutParams(params);
     }
 
+    public void popupSyncDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity(), R.layout.sync_custom_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        Button cancelSyncBtn = (Button)view.findViewById(R.id.btn_cancel_sync);
+        Button comfirmSyncBtn = (Button)view.findViewById(R.id.btn_comfirm_sync);
+        // 取消/确定按钮监听事件处理
+        cancelSyncBtn.setOnClickListener(this);
+        comfirmSyncBtn.setOnClickListener(this);
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(800, 400);
+    }
+
+    public void popupLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = View.inflate(getActivity(), R.layout.logout_custom_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        Button cancelLogoutBtn = (Button)view.findViewById(R.id.btn_cancel_logout);
+        Button comfirmLogoutBtn = (Button)view.findViewById(R.id.btn_comfirm_logout);
+        // 取消/确定按钮监听事件处理
+        cancelLogoutBtn.setOnClickListener(this);
+        comfirmLogoutBtn.setOnClickListener(this);
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(800, 400);
+    }
+
     @Override
     public void onUpdateData(boolean result, int resultCode, String message) {
         ToastUtil.showShort(getActivity(), message);
@@ -208,7 +258,6 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
         } else {
             // onResume()
             toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
             title.setText("");
         }
     }

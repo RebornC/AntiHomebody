@@ -24,11 +24,9 @@ public class CommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(Color.parseColor("#e2e7d3"));
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         TextView title = (TextView) getActivity().findViewById(R.id.title);
         title.setText("");
-        title.setTextColor(getResources().getColor(R.color.white));
 
         return view;
     }
@@ -41,11 +39,9 @@ public class CommunityFragment extends Fragment {
         } else {
             // onResume()
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-            toolbar.setBackgroundColor(Color.parseColor("#e2e7d3"));
-            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             TextView title = (TextView) getActivity().findViewById(R.id.title);
             title.setText("");
-            title.setTextColor(getResources().getColor(R.color.white));
         }
     }
 }

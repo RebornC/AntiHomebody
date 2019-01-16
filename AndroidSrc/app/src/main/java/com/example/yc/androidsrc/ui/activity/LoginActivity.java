@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yc.androidsrc.R;
@@ -39,6 +40,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
     private EditText password;
     private Button loginBtn;
     private TextView register;
+    private ImageView weibo;
+    private ImageView qq;
+    private ImageView wechat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +60,13 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
         password = (EditText) findViewById(R.id.password);
         loginBtn = (Button) findViewById(R.id.login);
         register = (TextView) findViewById(R.id.register);
+        weibo = (ImageView) findViewById(R.id.weibo);
+        qq = (ImageView) findViewById(R.id.qq);
+        wechat = (ImageView) findViewById(R.id.wechat);
         // set listener
+        weibo.setOnClickListener(this);
+        qq.setOnClickListener(this);
+        wechat.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
         register.setOnClickListener(this);
         // init
@@ -73,7 +83,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView, View
             case R.id.login:
                 loginPresenter.doLogin(phoneNumber.getText().toString(), password.getText().toString(), LoginActivity.this);
                 break;
-            default:
+            case R.id.weibo:
+                // 暂时未申请到第三方登录入口的权限
+                ToastUtil.showShort(LoginActivity.this, "暂时未申请到第三方登录入口的权限，请直接用手机号码注册并登录吧");
+                break;
+            case R.id.qq:
+                ToastUtil.showShort(LoginActivity.this, "暂时未申请到第三方登录入口的权限，请直接用手机号码注册并登录吧");
+                break;
+            case R.id.wechat:
+                ToastUtil.showShort(LoginActivity.this, "暂时未申请到第三方登录入口的权限，请直接用手机号码注册并登录吧");
                 break;
         }
     }

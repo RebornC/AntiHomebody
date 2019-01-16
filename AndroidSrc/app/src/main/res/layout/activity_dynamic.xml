@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.yc.androidsrc.views.HeadZoomScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteSmoke" >
+
+    <!--descendantFocusability="blocksDescendants"-->
+    <!--避免listView默认获得焦点-->
+
+    <android.support.constraint.ConstraintLayout
+        android:descendantFocusability="blocksDescendants"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/head_bg"
+            android:background="@color/colorPrimary"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="140dp" />
+
+        <ImageView
+            android:id="@+id/rocket"
+            android:src="@mipmap/rocket"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintLeft_toLeftOf="@id/head_bg"
+            app:layout_constraintTop_toTopOf="@id/head_bg" />
+
+        <Button
+            android:background="@drawable/button_shape_7"
+            android:text="记录你的能量动态"
+            android:textColor="@color/offWhite"
+            android:layout_width="130dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toRightOf="@id/rocket"
+            app:layout_constraintTop_toTopOf="@id/rocket"/>
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:src="@drawable/ic_chevron_left_white_24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:divider="@null"
+            app:layout_constraintTop_toBottomOf="@+id/head_bg"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </android.support.constraint.ConstraintLayout>
+
+</com.example.yc.androidsrc.views.HeadZoomScrollView>

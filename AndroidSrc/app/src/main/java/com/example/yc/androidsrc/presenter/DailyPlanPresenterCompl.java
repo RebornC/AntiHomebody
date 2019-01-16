@@ -113,7 +113,7 @@ public class DailyPlanPresenterCompl implements IDailyPlanPresenter {
             userDataDao.updateUserData(curUser);
             // 更新动态记录
             SimpleDateFormat df_1 = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat df_2 = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat df_2 = new SimpleDateFormat("HH:mm");
             String curDay = df_1.format(new Date());
             String curTime = df_2.format(new Date());
             String source = context.getResources().getStringArray(R.array.source_of_energy)[1];

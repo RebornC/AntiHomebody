@@ -97,7 +97,6 @@ public class UserSettingsActivity extends AppCompatActivity implements IPersonal
     private OutputStream out;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

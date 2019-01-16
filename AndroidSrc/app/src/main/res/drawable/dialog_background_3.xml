@@ -3,4 +3,8 @@
     android:shape="rectangle">
     <!-- 设置按钮的四个角为弧形 -->
     <corners android:radius="10dip"/>
+    <!-- 填充的颜色 -->
+    <solid android:color="@color/offWhite"/>
+    <!--边框的宽度及颜色-->
+    <stroke android:width="2px" android:color="@color/colorAccent" />
 </shape>

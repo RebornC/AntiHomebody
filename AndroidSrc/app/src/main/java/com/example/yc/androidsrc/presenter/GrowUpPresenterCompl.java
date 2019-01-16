@@ -9,10 +9,12 @@ import com.example.yc.androidsrc.db.EnergyOfPlanDao;
 import com.example.yc.androidsrc.db.EnergySourceDao;
 import com.example.yc.androidsrc.db.LocalLoginDao;
 import com.example.yc.androidsrc.db.PlanDataDao;
+import com.example.yc.androidsrc.db.SelfTalkingDao;
 import com.example.yc.androidsrc.db.StepDataDao;
 import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model.DailyEnergyEntity;
 import com.example.yc.androidsrc.model.EnergySourceEntity;
+import com.example.yc.androidsrc.model.SelfTalkingEntity;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.impl.IGrowUpPresenter;
 import com.example.yc.androidsrc.ui.impl.IGrowUpView;
@@ -224,7 +226,7 @@ public class GrowUpPresenterCompl implements IGrowUpPresenter {
     public void rewardEnergy(Context context, _User curUser, int energy) {
         try {
             SimpleDateFormat df_1 = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat df_2 = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat df_2 = new SimpleDateFormat("HH:mm");
             String curDay = df_1.format(new Date());
             String curTime = df_2.format(new Date());
             // 更新用户数据表
@@ -264,7 +266,7 @@ public class GrowUpPresenterCompl implements IGrowUpPresenter {
         boolean isChange = false;
         try {
             SimpleDateFormat df_1 = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat df_2 = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat df_2 = new SimpleDateFormat("HH:mm");
             String curDay = df_1.format(new Date());
             String curTime = df_2.format(new Date());
             // 更新用户数据表
@@ -315,6 +317,23 @@ public class GrowUpPresenterCompl implements IGrowUpPresenter {
             }
         }
 
+    }
+
+    /**
+     * 增加一项“碎碎念”数据
+     *
+     * @param context
+     * @param curUser
+     * @param text
+     */
+    @Override
+    public void addNewSelfTalking(Context context, _User curUser, String text) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String curDate = df.format(new Date());
+        SelfTalkingEntity selfTalkingEntity = new SelfTalkingEntity(curUser.getObjectId(), curDate, text);
+        SelfTalkingDao selfTalkingDao = new SelfTalkingDao(context);
+        selfTalkingDao.addNewData(selfTalkingEntity);
+        iGrowUpView.onUpdateData(true, 0, "已保存");
     }
 
 }

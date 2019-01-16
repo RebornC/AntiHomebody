@@ -64,6 +64,7 @@ public class ActiveDegreeFragment extends Fragment implements IGrowUpView, View.
     private String objectId;
     private _User curUser;
     private View view;
+    private TextView title;
     private IGrowUpPresenter growUpPresenter;
     private Button scoreBtn;
     private TextView scoreOfTrendTv;
@@ -275,6 +276,23 @@ public class ActiveDegreeFragment extends Fragment implements IGrowUpView, View.
         }
     }
 
+    /**
+     * 当ViewPager中的fragment切换为可见时
+     * PS: setUserVisibleHint先于onCreateView进行
+     * 所以要注意空指针现象
+     *
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (view != null) {
+                title = (TextView) getActivity().findViewById(R.id.title);
+                title.setText("");
+            }
+        }
+    }
 
     @Override
     public void onUpdateData(boolean result, int resultCode, String message) {

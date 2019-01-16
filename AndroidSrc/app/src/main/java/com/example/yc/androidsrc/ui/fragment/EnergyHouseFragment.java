@@ -58,6 +58,7 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
     private Button receiveEnergyBtn;
     private AlertDialog dialog;
     private AVLoadingIndicatorView avLoadingIndicatorView;
+    private TextView title;
 
     private int userLevel;
     private int denominator;
@@ -144,23 +145,20 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         // 判断当天首次登录信息是否写进数据库，没有的话则写入，同时弹出活跃度检测结果
         if (!growUpPresenter.loginToday(getActivity(), curUser.getObjectId())) {
             growUpPresenter.addLoginData(getActivity(), curUser.getObjectId());
-            // ToastUtil.showShort(getActivity(), growUpPresenter.queryFirstLoginDate(getActivity(), curUser.getObjectId()));
             if (dateList.contains(growUpPresenter.queryFirstLoginDate(getActivity(), curUser.getObjectId()))) {
                 // 此时本地登录未满7天，不应该进行活跃度检测
             } else {
                 // 此时本地登录已满7天，进行活跃度检测，弹出对话框
+                List<Integer> dailyEnergy = new ArrayList<>();
+                for (int i = 0; i < dateList.size(); i++) {
+                    int energyValue = growUpPresenter.getUserDailyEnergyData(getActivity(), curUser.getObjectId(), dateList.get(i));
+                    dailyEnergy.add(energyValue);
+                }
+                // 进行数据评估，返回相关结果
+                activeLevel = DataMonitor.estimate(dailyEnergy).get(0);
+                // 当天初次登录弹出提示活跃度的对话框
+                popupActiveDialog(getActivity());
             }
-            //----这部分到时移入上面else框内--------------------
-            List<Integer> dailyEnergy = new ArrayList<>();
-            for (int i = 0; i < dateList.size(); i++) {
-                int energyValue = growUpPresenter.getUserDailyEnergyData(getActivity(), curUser.getObjectId(), dateList.get(i));
-                dailyEnergy.add(energyValue);
-            }
-            // 进行数据评估，返回相关结果
-            activeLevel = DataMonitor.estimate(dailyEnergy).get(0);
-            // 当天初次登录弹出提示活跃度的对话框
-            popupActiveDialog(getActivity());
-            //----------------------------------------
         }
     }
 
@@ -297,6 +295,24 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         });
     }
 
+
+    /**
+     * 当ViewPager中的fragment切换为可见时
+     * PS: setUserVisibleHint先于onCreateView进行
+     * 所以要注意空指针现象
+     *
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (view != null) {
+                title = (TextView) getActivity().findViewById(R.id.title);
+                title.setText("");
+            }
+        }
+    }
 
     @Override
     public void onUpdateData(boolean result, int resultCode, String message) {

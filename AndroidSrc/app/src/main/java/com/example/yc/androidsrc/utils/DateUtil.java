@@ -8,6 +8,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * 注意，在liySimpleDateFormat转换日期格式时
+ * HH表示24小时制，如18 （下午18时）
+ * hh表示12小时制，如06 （下午18时）
+ * 没有特殊情况时选择用HH
+ *
  * @author RebornC
  * Created on 2018/12/11.
  */

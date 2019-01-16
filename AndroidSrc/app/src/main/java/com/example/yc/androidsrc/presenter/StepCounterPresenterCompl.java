@@ -49,7 +49,7 @@ public class StepCounterPresenterCompl implements IStepCounterPresenter {
     public void updateSqlData(Context context, _User curUser, int stepCounts, int energy) {
         try {
             SimpleDateFormat df_1 = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat df_2 = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat df_2 = new SimpleDateFormat("HH:mm");
             String curDay = df_1.format(new Date());
             String curTime = df_2.format(new Date());
             // 更新计步数据表
