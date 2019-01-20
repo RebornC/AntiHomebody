@@ -128,8 +128,6 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         List<String> dateList = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         for (int i = 0 ; i < 7 + 1; i++) {
-            // 获取当前日历的日期的星期数（比如1:星期天）
-            int week_index = cal.get(Calendar.DAY_OF_WEEK);
             Date date = cal.getTime();
             // 日期格式化 yyyy-MM-dd
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

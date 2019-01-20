@@ -162,6 +162,7 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
             curEnergyValue = (int) (currentCounts * coefficient);
             stopCount.setEnergyValue(curEnergyValue);
         } else {
+            curEnergyValue = maxEnergyValue;
             stopCount.setEnergyValue(maxEnergyValue);
         }
     }
