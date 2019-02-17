@@ -129,7 +129,6 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         Calendar cal = Calendar.getInstance();
         for (int i = 0 ; i < 7; i++) {
             Date date = cal.getTime();
-            // 日期格式化 yyyy-MM-dd
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(date);
             dateList.add(dateString);
