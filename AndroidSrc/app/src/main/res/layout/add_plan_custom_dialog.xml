@@ -6,7 +6,7 @@
 
     <EditText
         android:id="@+id/dialog_edit"
-        android:hint="输入你的今日计划吧"
+        android:hint="输入你的计划吧"
         android:minLines="2"
         android:textCursorDrawable="@drawable/cursor_1"
         android:textSize="15sp"
