@@ -124,17 +124,15 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
      * 根据评测分数进行奖罚
      */
     public void getUserEnergyData() {
-        // 最近七天（不包含当天）
+        // 最近七天（包含当天）
         List<String> dateList = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
-        for (int i = 0 ; i < 7 + 1; i++) {
+        for (int i = 0 ; i < 7; i++) {
             Date date = cal.getTime();
             // 日期格式化 yyyy-MM-dd
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(date);
-            if (i != 0) {
-                dateList.add(dateString);
-            }
+            dateList.add(dateString);
             // 将日历日期往前推1天
             cal.add(cal.DATE, -1);
         }
