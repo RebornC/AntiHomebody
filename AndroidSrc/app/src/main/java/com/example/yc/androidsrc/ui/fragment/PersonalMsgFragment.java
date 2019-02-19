@@ -26,6 +26,7 @@ import com.example.yc.androidsrc.ui.activity.DynamicActivity;
 import com.example.yc.androidsrc.ui.activity.LoginActivity;
 import com.example.yc.androidsrc.ui.activity.SelfTalkingActivity;
 import com.example.yc.androidsrc.ui.activity.UserSettingsActivity;
+import com.example.yc.androidsrc.ui.activity.WebViewActivity;
 import com.example.yc.androidsrc.ui.impl.IPersonalMsgView;
 import com.example.yc.androidsrc.utils.ToastUtil;
 
@@ -122,10 +123,14 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        ToastUtil.showShort(getActivity(), "关于非宅");
+                        Intent intentToIntro = new Intent(getActivity(), WebViewActivity.class);
+                        intentToIntro.putExtra("httpUrl", "https://github.com/RebornC/AntiHomebody/blob/master/docs/%E5%85%B3%E4%BA%8E%E9%9D%9E%E5%AE%85.md");
+                        startActivity(intentToIntro);
                         break;
                     case 1:
-                        ToastUtil.showShort(getActivity(), "用户指南");
+                        Intent intentToCompass = new Intent(getActivity(), WebViewActivity.class);
+                        intentToCompass.putExtra("httpUrl", "https://github.com/RebornC/AntiHomebody/blob/master/docs/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.md");
+                        startActivity(intentToCompass);
                         break;
                 }
             }

@@ -3,7 +3,10 @@ package com.example.yc.androidsrc.presenter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.common.AppConfig;
 import com.example.yc.androidsrc.db.UserDataDao;
 import com.example.yc.androidsrc.model._User;
@@ -26,6 +29,7 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
 
     private Context context;
     private IRegisterView iRegisterView;
+    private AlertDialog dialog;
 
     private String msg = "";
     private static final int REGISTER_FAIL_CODE_1 = 1; // 填写不完整
@@ -56,26 +60,29 @@ public class RegisterPresenterCompl implements IRegisterPresenter {
     @Override
     public void showLoginDialog(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("注册成功！请开始你的成长之旅吧");
-        // 拒绝, 退出应用
-        builder.setNegativeButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface log, int which) {
-
-                    }
-                });
-        builder.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface log, int which) {
-                        iRegisterView.onSetProgressDialogVisibility(true);
-                        iRegisterView.onShowLoginDialog(true);
-                    }
-                });
-
-        builder.setCancelable(false);
-        builder.show();
+        View view = View.inflate(context, R.layout.register_success_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        Button cancelSyncBtn = (Button)view.findViewById(R.id.btn_cancel);
+        Button confirmSyncBtn = (Button)view.findViewById(R.id.btn_confirm);
+        // 取消/确定按钮监听事件处理
+        cancelSyncBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        confirmSyncBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iRegisterView.onSetProgressDialogVisibility(true);
+                iRegisterView.onShowLoginDialog(true);
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(900, 400);
     }
 
     @Override

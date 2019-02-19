@@ -35,6 +35,10 @@ public class WelcomeActivity extends AppCompatActivity {
         _User currentUser = BmobUser.getCurrentUser(_User.class);
         if (currentUser != null) {
             it = new Intent(this, MainActivity.class);
+            // 假若用户通过桌面 widget 启动 App，则带上指定的跳转信息
+            if (getIntent() != null) {
+                it.putExtra("key", getIntent().getStringExtra("key"));
+            }
         } else {
             // 不存在当前用户，转向登录界面
             it = new Intent(this, LoginActivity.class);

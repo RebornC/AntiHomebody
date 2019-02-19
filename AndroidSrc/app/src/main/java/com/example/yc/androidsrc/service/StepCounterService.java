@@ -33,7 +33,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private UpdateUIStepCallBack mCallback;
     // 传感器管理对象
     private SensorManager sensorManager;
-    // 计步传感器类型  Sensor.TYPE_STEP_COUNTER或者Sensor.TYPE_STEP_DETECTOR
+    // 计步传感器类型 Sensor.TYPE_STEP_COUNTER或者Sensor.TYPE_STEP_DETECTOR
     private static int stepSensorType = -1;
     // 默认1秒进行一次存储
     private static int duration = 1000 * 1;
@@ -81,11 +81,11 @@ public class StepCounterService extends Service implements SensorEventListener {
         builder = new Notification.Builder(this.getApplicationContext());
         // 设置点击通知栏打开的界面
         nfIntent = new Intent(this, MainActivity.class);
-        nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+        nfIntent.putExtra("key", "switchStepCounterFragment"); // 点击通知栏跳转到计步fragment界面
+        builder.setContentIntent(PendingIntent.getActivity(this, 1, nfIntent, PendingIntent.FLAG_UPDATE_CURRENT)) // 设置PendingIntent
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.astronaut_icon)) // 设置下拉列表中的图标(大图标)
                 .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.astronaut_icon) // 设置状态栏内的小图标
+                .setSmallIcon(R.mipmap.logo) // 设置状态栏内的小图标
                 .setContentText("非宅正在记录你的运动"); // 设置上下文内容
         // 获取构建好的Notification
         Notification stepNotification = builder.build();
@@ -241,11 +241,11 @@ public class StepCounterService extends Service implements SensorEventListener {
             mCallback.updateUIStep(CURRENT_STEP);
             // 设置通知栏
             nfIntent = new Intent(StepCounterService.this, MainActivity.class);
-            nfIntent.putExtra("toValue", "switchFragment1"); // 点击通知栏跳转到计步fragment界面
-            builder.setContentIntent(PendingIntent.getActivity(StepCounterService.this, 0, nfIntent, 0)) // 设置PendingIntent
+            nfIntent.putExtra("key", "switchStepCounterFragment"); // 点击通知栏跳转到计步fragment界面
+            builder.setContentIntent(PendingIntent.getActivity(StepCounterService.this, 1, nfIntent, PendingIntent.FLAG_UPDATE_CURRENT)) // 设置PendingIntent
                     .setLargeIcon(BitmapFactory.decodeResource(StepCounterService.this.getResources(), R.mipmap.astronaut_icon)) // 设置下拉列表中的图标(大图标)
                     .setContentTitle("已行走" + CURRENT_STEP + "步") // 设置下拉列表里的标题
-                    .setSmallIcon(R.mipmap.astronaut_icon) // 设置状态栏内的小图标
+                    .setSmallIcon(R.mipmap.logo) // 设置状态栏内的小图标
                     .setContentText("非宅正在记录你的运动"); // 设置上下文内容
             // 获取构建好的Notification
             Notification stepNotification = builder.build();

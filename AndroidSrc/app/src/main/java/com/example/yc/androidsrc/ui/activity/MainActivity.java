@@ -2,6 +2,7 @@ package com.example.yc.androidsrc.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -161,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * onNewIntent方法的使用在于如果activity已经开启了，并设置了启动模式为：android:launchMode="singleTask"的时候
-     * 当再次使用intent来启动这个activtiy的时候就会先进入onNewIntent()这个方法，接着再onResart()-->onStart()-->onResume()
-     * 在接受通知栏的函数里面可以传递参数，在该activity的onNewIntent进行判断处理，指定需要显示的fragment界面
+     * 当再次使用intent来启动这个activtiy的时候就会先进入onNewIntent()这个方法，接着再onRestart()-->onStart()-->onResume()
+     * 在接受通知栏/桌面widget的函数里面可以传递参数，在该activity的onNewIntent进行判断处理，指定需要显示的fragment界面
      * @param intent
      */
     @Override
@@ -172,28 +173,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 如果系统由于内存不足把该Activity释放掉了，那么点击通知栏再次调用的时候会重新启动Activity
+     * 如果是未启动APP或系统由于内存不足把该Activity释放掉了，那么点击通知栏/桌面widget再次调用的时候会重新启动该Activity
      * 即执行onCreate()-->onStart()-->onResume()等，所以在onResume()里也进行参数传递
+     *
+     * 2019/2/19 取消在onResume()里使用getNotify进行参数判断
+     * 原因：在【未启动APP】时，通过桌面widget启动该Activity然后再进入对应的StepCounterFragment或DailyPlanFragment
+     * 虽然能进入对应的fragment，但此时如果再切换成GrowUpFragment，则会发生闪退（华为荣耀8X）
      */
     @Override
     protected void onResume() {
         super.onResume();
-        getNotify(getIntent());
+        // getNotify(getIntent());
     }
 
     private void getNotify(Intent intent){
-        String value = intent.getStringExtra("toValue");
+        // String action = intent.getAction();
+        String value = intent.getStringExtra("key");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        MenuFragment menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.nav_view); // 强制转换
         if(!TextUtils.isEmpty(value)) {
             switch (value) {
-                case "switchFragment1":
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    MenuFragment menuFragment = (MenuFragment) fragmentManager.findFragmentById(R.id.nav_view); // 强制转换
+                case "switchStepCounterFragment":
                     menuFragment.setItemChecked(1); // 菜单选项切换到对应一栏
                     switchFragment(1); // 切换到对应的fragment界面
                     break;
+                case "switchDailyPlanFragment":
+                    menuFragment.setItemChecked(2);
+                    switchFragment(2);
+                    break;
             }
         }
-        super.onNewIntent(intent);
     }
 
     /**
