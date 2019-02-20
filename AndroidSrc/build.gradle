@@ -2,7 +2,9 @@
 
 buildscript {
     repositories {
+        maven {url 'https://maven.google.com'}
         jcenter()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
@@ -14,11 +16,16 @@ buildscript {
 
 allprojects {
     repositories {
+
+        maven {url 'https://maven.google.com'}
         jcenter()
         // Bmob的maven仓库地址
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
         // MPAndroidChart数据可视化图标框架
         maven { url 'https://jitpack.io' }
+        // 友盟推送
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
 

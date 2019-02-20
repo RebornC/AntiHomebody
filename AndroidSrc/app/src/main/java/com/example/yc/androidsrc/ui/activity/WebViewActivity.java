@@ -17,6 +17,13 @@ import android.widget.ProgressBar;
 
 import com.example.yc.androidsrc.R;
 
+/**
+ * 根据传进来的httpUrl打开对应的网页
+ *
+ * @author RebornC
+ * Created on 2018/02/19.
+ */
+
 public class WebViewActivity extends AppCompatActivity {
     private WebView webView;
     private WebSettings webSettings;

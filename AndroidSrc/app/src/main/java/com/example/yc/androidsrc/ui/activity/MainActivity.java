@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.yc.androidsrc.ui.fragment.CommunityFragment;
 import com.example.yc.androidsrc.ui.fragment.DailyPlanFragment;
 import com.example.yc.androidsrc.ui.fragment.GrowUpFragment;
 import com.example.yc.androidsrc.ui.fragment.MenuFragment;
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         tabFragments.add(new GrowUpFragment());
         tabFragments.add(new StepCounterFragment());
         tabFragments.add(new DailyPlanFragment());
-        tabFragments.add(new CommunityFragment());
         tabFragments.add(new PersonalMsgFragment());
 
         contentFrameLayout = (FrameLayout) findViewById(R.id.content_view);

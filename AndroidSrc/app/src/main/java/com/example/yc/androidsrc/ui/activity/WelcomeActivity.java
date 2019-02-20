@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.model._User;
+import com.umeng.message.PushAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,9 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 全屏
+
+        // 应用数据统计接口
+        PushAgent.getInstance(this).onAppStart();
 
         // 判断是否存在当前用户，如果存在，则直接进入主界面，不用再次登录
         _User currentUser = BmobUser.getCurrentUser(_User.class);

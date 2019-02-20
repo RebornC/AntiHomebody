@@ -1,4 +1,4 @@
-package com.example.yc.androidsrc;
+package com.example.yc.androidsrc.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,11 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.example.yc.androidsrc.R;
 import com.example.yc.androidsrc.ui.activity.WelcomeActivity;
 
 /**
- * Implementation of App Widget functionality.
+ * 桌面小窗口部件
+ * 可作为程序快速入口
+ *
+ * @author RebornC
+ * Created on 2018/02/19.
  */
+
 public class AppWidget extends AppWidgetProvider {
 
     public static final String CLICK_TO_STEP = "click.step";
