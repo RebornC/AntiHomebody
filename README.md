@@ -44,7 +44,7 @@
 
 ## 进度计划
 
-![](https://github.com/RebornC/AntiHomebody/blob/master/docs/process.png?raw=true)
+![](https://github.com/RebornC/AntiHomebody/blob/master/images/process.png?raw=true)
 
 ## 会议记录
 
