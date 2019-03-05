@@ -65,6 +65,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.WebViewActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
 
         <service

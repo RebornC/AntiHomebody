@@ -4,9 +4,24 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/ad_image"
         android:src="@mipmap/coopen"
+        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/ad_timer"
+        android:text="跳过 3 s"
+        android:textColor="@color/white"
+        android:textSize="6pt"
+        android:background="@drawable/button_shape_9"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"/>
 
 </RelativeLayout>

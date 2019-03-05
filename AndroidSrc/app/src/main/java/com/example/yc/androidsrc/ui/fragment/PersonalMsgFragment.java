@@ -124,12 +124,12 @@ public class PersonalMsgFragment extends Fragment implements IPersonalMsgView, V
                 switch (position) {
                     case 0:
                         Intent intentToIntro = new Intent(getActivity(), WebViewActivity.class);
-                        intentToIntro.putExtra("httpUrl", "https://github.com/RebornC/AntiHomebody/blob/master/docs/%E5%85%B3%E4%BA%8E%E9%9D%9E%E5%AE%85.md");
+                        intentToIntro.putExtra("httpUrl", getActivity().getResources().getString(R.string.intro_url));
                         startActivity(intentToIntro);
                         break;
                     case 1:
                         Intent intentToCompass = new Intent(getActivity(), WebViewActivity.class);
-                        intentToCompass.putExtra("httpUrl", "https://github.com/RebornC/AntiHomebody/blob/master/docs/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.md");
+                        intentToCompass.putExtra("httpUrl", getActivity().getResources().getString(R.string.compass_url));
                         startActivity(intentToCompass);
                         break;
                 }

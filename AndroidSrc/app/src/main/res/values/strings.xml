@@ -46,4 +46,8 @@
 
     <string name="default_signature">遇见更好的自己</string>
 
+    <string name="intro_url">https://github.com/RebornC/AntiHomebody/blob/master/docs/%E5%85%B3%E4%BA%8E%E9%9D%9E%E5%AE%85.md</string>
+    <string name="compass_url">https://github.com/RebornC/AntiHomebody/blob/master/docs/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.md</string>
+    <string name="advisement_url">https://www.easy-mock.com/mock/5b71b3caebd4a208cce29bf1/advertisement/</string>
+
 </resources>

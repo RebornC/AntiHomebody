@@ -1,5 +1,6 @@
 package com.example.yc.androidsrc.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +30,7 @@ public class WebViewActivity extends AppCompatActivity {
     private WebSettings webSettings;
     private ProgressBar progressBar;
     private String httpUrl;
+    private boolean isAdvertisement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.webview);
 
         httpUrl = getIntent().getStringExtra("httpUrl");
+        isAdvertisement = getIntent().getBooleanExtra("isAdvertisement", false);
         progressBar= (ProgressBar)findViewById(R.id.progressbar); // 进度条
         webView = (WebView) findViewById(R.id.webview);
 
@@ -75,10 +78,10 @@ public class WebViewActivity extends AppCompatActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-// if (url.equals("http://www.google.com/")) {
-// ToastUtil.showShort(WebViewActivity.this, "此网站已被拦截，无法访问");
-// return true;
-// }
+//             if (url.equals("http://www.google.com/")) {
+//                ToastUtil.showShort(WebViewActivity.this, "此网站已被拦截，无法访问");
+//                return true;
+//             }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -121,7 +124,12 @@ public class WebViewActivity extends AppCompatActivity {
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             // 离开 webView
-            finish();
+            if (isAdvertisement) {
+                Intent intent = new Intent(WebViewActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                finish();
+            }
             return true;
         }
         return super.onKeyDown(keyCode,event);
