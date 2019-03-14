@@ -108,7 +108,7 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
         // 先通过Bmob本地缓存获取用户Id，在通过Id获取数据库中的本地记录
         dailyPlanPresenter = new DailyPlanPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
-        curUser = dailyPlanPresenter.getUserDate(getActivity(), objectId);
+        curUser = dailyPlanPresenter.getUserData(getActivity(), objectId);
 
         df = new SimpleDateFormat("yyyy-MM-dd");
         curDate = df.format(new Date());
@@ -311,6 +311,7 @@ public class DailyPlanFragment extends Fragment implements IDailyPlanView, View.
 
 
     public void receiveEnergy() {
+        curUser = dailyPlanPresenter.getUserData(getActivity(), objectId);
         dailyPlanPresenter.receiveEnergy(getActivity(), curUser, selectedDate, energyValue);
         dailyPlanPresenter.updateBackendData(energyValue);
     }

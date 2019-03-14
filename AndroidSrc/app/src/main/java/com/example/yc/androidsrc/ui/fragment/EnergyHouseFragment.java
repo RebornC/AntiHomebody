@@ -102,7 +102,7 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
 
     public void initValue() {
         // 获取/刷新用户数据
-        curUser = growUpPresenter.getUserDate(getActivity(), objectId);
+        curUser = growUpPresenter.getUserData(getActivity(), objectId);
         userLevel = curUser.getCurLevel();
         denominator = curUser.getDenominator();
         numerator = curUser.getNumerator();

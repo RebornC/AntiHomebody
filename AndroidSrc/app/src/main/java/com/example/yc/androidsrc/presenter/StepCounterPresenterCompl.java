@@ -39,7 +39,7 @@ public class StepCounterPresenterCompl implements IStepCounterPresenter {
     }
 
     @Override
-    public _User getUserDate(Context context, String objectId) {
+    public _User getUserData(Context context, String objectId) {
         UserDataDao userDataDao = new UserDataDao(context);
         _User user = userDataDao.getUserDataById(objectId);
         return user;

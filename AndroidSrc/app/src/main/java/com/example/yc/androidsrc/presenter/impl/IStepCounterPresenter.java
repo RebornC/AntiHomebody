@@ -13,7 +13,7 @@ import com.example.yc.androidsrc.model._User;
  */
 
 public interface IStepCounterPresenter {
-    _User getUserDate(Context context, String objectId);
+    _User getUserData(Context context, String objectId);
     void updateSqlData(Context context, _User curUser, int stepCounts, int energy);
     void updateBackendData(int energy);
 }

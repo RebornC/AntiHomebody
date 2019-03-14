@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public interface IDailyPlanPresenter {
-    _User getUserDate(Context context, String objectId);
+    _User getUserData(Context context, String objectId);
     List<PlanEntity> getTodoPlan(Context context, String userId, String curDate);
     List<PlanEntity> getCompletedPlan(Context context, String userId, String curDate);
     void addNewPlan(Context context, PlanEntity planEntity);

@@ -53,7 +53,7 @@ public class WormholeFragment extends Fragment implements IGrowUpView, View.OnCl
     public void initView() {
         growUpPresenter = new GrowUpPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
-        curUser = growUpPresenter.getUserDate(getActivity(), objectId);
+        curUser = growUpPresenter.getUserData(getActivity(), objectId);
         btn = (Button) view.findViewById(R.id.btn);
         btn.setOnClickListener(this);
     }

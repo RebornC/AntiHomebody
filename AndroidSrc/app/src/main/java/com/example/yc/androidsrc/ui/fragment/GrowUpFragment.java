@@ -72,7 +72,7 @@ public class GrowUpFragment extends Fragment implements IGrowUpView, View.OnClic
         // 先通过Bmob本地缓存获取用户Id，在通过Id获取数据库中的本地记录
         growUpPresenter = new GrowUpPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
-        curUser = growUpPresenter.getUserDate(getActivity(), objectId);
+        curUser = growUpPresenter.getUserData(getActivity(), objectId);
 
         // toolbar设置
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);

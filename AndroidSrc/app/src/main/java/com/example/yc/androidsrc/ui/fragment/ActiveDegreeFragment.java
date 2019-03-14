@@ -101,7 +101,7 @@ public class ActiveDegreeFragment extends Fragment implements IGrowUpView, View.
     public void initView() {
         growUpPresenter = new GrowUpPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
-        curUser = growUpPresenter.getUserDate(getActivity(), objectId);
+        curUser = growUpPresenter.getUserData(getActivity(), objectId);
         lineChart = (LineChart) view.findViewById(R.id.linechart);
         scoreBtn = (Button) view.findViewById(R.id.score);
         scoreOfTrendTv = (TextView) view.findViewById(R.id.score_of_trend);

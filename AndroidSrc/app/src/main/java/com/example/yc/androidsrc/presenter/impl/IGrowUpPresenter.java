@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public interface IGrowUpPresenter {
-    _User getUserDate(Context context, String objectId);
+    _User getUserData(Context context, String objectId);
     void addEnergy(Context context, _User user);
     int getUserDailyEnergyData(Context context, String userId, String curDate);
     int getTotalStepByDateList(Context context, String userId, List<String> dateList);

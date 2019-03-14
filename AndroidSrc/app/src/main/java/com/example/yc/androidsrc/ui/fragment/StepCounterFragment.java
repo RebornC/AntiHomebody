@@ -75,7 +75,7 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
         // 先通过Bmob本地缓存获取用户Id，在通过Id获取数据库中的本地记录
         stepCounterPresenter = new StepCounterPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
-        curUser = stepCounterPresenter.getUserDate(getActivity(), objectId);
+        curUser = stepCounterPresenter.getUserData(getActivity(), objectId);
 
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -143,6 +143,7 @@ public class StepCounterFragment extends Fragment implements IStepCounterView, V
                 getActivity().stopService(mIntent);
                 setStepAndEnergyValue(0);
                 // 调用presenter层，将数据记录到数据库中，同时更新到后台
+                curUser = stepCounterPresenter.getUserData(getActivity(), objectId);
                 stepCounterPresenter.updateSqlData(getActivity(), curUser, flag_1, flag_2);
                 stepCounterPresenter.updateBackendData(flag_2);
                 dialog.dismiss();
