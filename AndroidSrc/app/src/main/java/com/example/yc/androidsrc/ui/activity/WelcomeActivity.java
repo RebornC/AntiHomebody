@@ -67,10 +67,10 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         timerBtn.setOnClickListener(this);
         httpUrl = SharedPreferencesUtil.get(this, "httpUrl", "").toString();
         // 检查当前是否存在广告图，如果存在，则直接从本地文件中读取，否则加载默认图片
-        File PicFile = new File(Environment.getExternalStorageDirectory(), "advertisementImage.jpg");
+        File PicFile = new File(Environment.getExternalStorageDirectory(), "AntiHomebody/advertisementImage.jpg");
         if (PicFile.exists()) {
             // 加载本地图片的两种方式
-            advertisementImage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/advertisementImage.jpg"));
+            advertisementImage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/AntiHomebody/advertisementImage.jpg"));
             // ad_image.setImageURI(Uri.fromFile(PicFile));
         } else {
             // 加载默认图片

@@ -265,7 +265,7 @@ public class UserSettingsActivity extends AppCompatActivity implements IPersonal
                         e.printStackTrace();
                     }
                     // 创建路径
-                    String path = Environment.getExternalStorageDirectory().getPath() + "/Pic";
+                    String path = Environment.getExternalStorageDirectory().getPath() + "/AntiHomebody";
                     // 获取外部储存目录
                     File file = new File(path);
                     // 创建新目录

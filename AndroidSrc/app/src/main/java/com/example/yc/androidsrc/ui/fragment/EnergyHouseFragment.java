@@ -2,6 +2,7 @@ package com.example.yc.androidsrc.ui.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,18 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.yc.androidsrc.R;
+import com.example.yc.androidsrc.common.AppConfig;
 import com.example.yc.androidsrc.common.DataMonitor;
 import com.example.yc.androidsrc.model._User;
 import com.example.yc.androidsrc.presenter.GrowUpPresenterCompl;
 import com.example.yc.androidsrc.presenter.impl.IGrowUpPresenter;
 import com.example.yc.androidsrc.ui.impl.IGrowUpView;
+import com.example.yc.androidsrc.utils.ImageUtil;
 import com.example.yc.androidsrc.utils.ToastUtil;
 import com.example.yc.androidsrc.views.GifView;
-import com.github.mikephil.charting.data.Entry;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +40,9 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+
+import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneSession;
+import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneTimeline;
 
 /**
  * 成长：能量驿站
@@ -60,6 +70,8 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
     private AVLoadingIndicatorView avLoadingIndicatorView;
     private TextView title;
 
+    private Bitmap bitmap;
+
     private int userLevel;
     private int denominator;
     private int numerator;
@@ -84,6 +96,9 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
 
 
     public void initView() {
+        title = (TextView) getActivity().findViewById(R.id.title);
+        title.setText("分享");
+        title.setOnClickListener(this);
         growUpPresenter = new GrowUpPresenterCompl(this);
         objectId = BmobUser.getCurrentUser(_User.class).getObjectId();
         gifV = (GifView) view.findViewById(R.id.gifview);
@@ -161,6 +176,10 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.title:
+                View clipView = (View) view.findViewById(R.id.card_view);
+                popupShareDialog(getActivity(), clipView);
+                break;
             case R.id.change_state_btn:
                 if (v.getTag().equals('1')) {
                     v.setTag('0');
@@ -186,6 +205,17 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
                 // 浇灌能量
                 dialog.dismiss();
                 growUpPresenter.addEnergy(getActivity(), curUser);
+                break;
+            case R.id.download:
+                ImageUtil.saveBitmapToSdCard(getActivity(), bitmap);
+                break;
+            case R.id.wechat:
+                shareToWechat(bitmap, WXSceneSession); // 发送到微信会话
+                dialog.dismiss();
+                break;
+            case R.id.moments:
+                shareToWechat(bitmap, WXSceneTimeline); // 发送到朋友圈
+                dialog.dismiss();
                 break;
         }
     }
@@ -292,6 +322,64 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
 
 
     /**
+     * 弹出dialog，显示生成的图片，并选择分享
+     *
+     * @param context
+     */
+    public void popupShareDialog(Context context, View clipView) {
+        // 将view转为bitmap
+        bitmap = ImageUtil.getCacheBitmapFromView(clipView);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(getActivity(), R.layout.user_share_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+
+        ImageView image = (ImageView) view.findViewById(R.id.image);
+        image.setImageBitmap(bitmap);
+        LinearLayout download = (LinearLayout) view.findViewById(R.id.download);
+        LinearLayout wechatShare = (LinearLayout) view.findViewById(R.id.wechat);
+        LinearLayout momentsShare = (LinearLayout) view.findViewById(R.id.moments);
+        download.setOnClickListener(this);
+        wechatShare.setOnClickListener(this);
+        momentsShare.setOnClickListener(this);
+
+        dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setLayout(800, 1100);
+    }
+
+
+    /**
+     * 分享图片至微信/朋友圈
+     *
+     * @param bmp
+     * @param targetScene
+     */
+    public void shareToWechat(Bitmap bmp, int targetScene) {
+        // 初始化WXImageObject和WXMediaMessage对象
+        WXImageObject imgObj = new WXImageObject(bmp);
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imgObj;
+        // 设置缩略图
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 120, 120, true);
+        bmp.recycle();
+        msg.thumbData = ImageUtil.bmpToByteArray(thumbBmp, true);
+        // 构造一个Req
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());  // transaction字段用于该请求的唯一标识
+        req.message = msg;
+        req.scene = targetScene;
+        //n调用api接口，发送数据到微信
+        AppConfig appConfig = new AppConfig();
+        IWXAPI api = appConfig.getWechatApi();
+        if (api != null)
+            api.sendReq(req);
+    }
+
+
+    /**
      * 当ViewPager中的fragment切换为可见时
      * PS: setUserVisibleHint先于onCreateView进行
      * 所以要注意空指针现象
@@ -304,7 +392,8 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
         if (isVisibleToUser) {
             if (view != null) {
                 title = (TextView) getActivity().findViewById(R.id.title);
-                title.setText("");
+                title.setText("分享");
+                title.setOnClickListener(this);
             }
         }
     }
@@ -342,4 +431,5 @@ public class EnergyHouseFragment extends Fragment implements IGrowUpView, View.O
             handle.postDelayed(runnable, 2000);
         }
     }
+
 }

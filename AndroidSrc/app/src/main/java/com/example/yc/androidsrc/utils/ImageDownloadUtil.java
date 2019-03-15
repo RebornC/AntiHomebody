@@ -1,10 +1,12 @@
 package com.example.yc.androidsrc.utils;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -49,7 +51,14 @@ public class ImageDownloadUtil {
                 // 获取连接的输入流，这个输入流就是图片的输入流
                 is = conn.getInputStream();
                 // 构建一个file对象用于存储图片
-                File file = new File(Environment.getExternalStorageDirectory(), "advertisementImage.jpg");
+                // 创建路径
+                String path = Environment.getExternalStorageDirectory().getPath() + "/AntiHomebody";
+                // 获取外部储存目录
+                File file = new File(path);
+                // 创建新目录
+                file.mkdirs();
+                // 生成新的文件
+                file = new File(file.toString() + "/advertisementImage.jpg");
                 fos = new FileOutputStream(file);
                 int len = 0;
                 byte[] buffer = new byte[1024];
@@ -82,6 +91,5 @@ public class ImageDownloadUtil {
             }
         }
     }
-
 
 }

@@ -3,6 +3,8 @@ package com.example.yc.androidsrc.common;
 import android.app.Application;
 import android.util.Log;
 
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -24,6 +26,16 @@ public class AppConfig extends Application {
      * 后端密钥
      */
     private static final String applicationID = "62dddc420e225515924df91ad0cd2823";
+
+    /**
+     * 微信开发平台所申请到的AppID
+     */
+    private static final String APP_ID = "wx01f46947ce1abda7";
+
+    /**
+     * IWXAPI是第三方app和微信通信的openApi接口
+     */
+    private static IWXAPI api;
 
     /**
      * 非宅APP的等级数据设计
@@ -109,5 +121,15 @@ public class AppConfig extends Application {
                 Log.e(TAG,"注册失败：-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
+
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+
+    }
+
+    public IWXAPI getWechatApi() {
+        return api;
     }
 }

@@ -208,6 +208,8 @@ public class GrowUpFragment extends Fragment implements IGrowUpView, View.OnClic
             // 注意此时viewpager处于不同的fragment时，toolbar也有变化
             if (viewPager.getCurrentItem() == 0) {
                 wormholeFragment.setUserVisibleHint(true);
+            } else if (viewPager.getCurrentItem() == 1) {
+                energyHouseFragment.setUserVisibleHint(true);
             }
             // 因为此时用户的能量值可能发生了变化，所以要刷新energyHouseFragment中的数据
             energyHouseFragment.initValue();

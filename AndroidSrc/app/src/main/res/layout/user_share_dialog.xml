@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@drawable/dialog_background_4"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:background="@drawable/dialog_background_2"
+        android:padding="1px"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:id="@+id/download"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/download_icon"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="下载"
+                android:textColor="@color/offWhite"
+                android:textSize="10sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wechat"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/wechat_share_icon"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="微信"
+                android:textColor="@color/offWhite"
+                android:textSize="10sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/moments"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/moments_share_icon"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="朋友圈"
+                android:textColor="@color/offWhite"
+                android:textSize="10sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
