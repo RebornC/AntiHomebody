@@ -1,0 +1,415 @@
+卷 系统 的文件夹 PATH 列表
+卷序列号为 000000EF 09C1:B27D
+C:.
+│  .DS_Store
+│  README.md
+│  tree.txt
+│  
+├─AndroidSrc
+│  │  .gitignore
+│  │  build.gradle
+│  │  gradle.properties
+│  │  gradlew
+│  │  gradlew.bat
+│  │  local.properties
+│  │  settings.gradle
+│  │  
+│  ├─.idea
+│  │  │  AndroidSrc.iml
+│  │  │  dbnavigator.xml
+│  │  │  gradle.xml
+│  │  │  misc.xml
+│  │  │  modules.xml
+│  │  │  runConfigurations.xml
+│  │  │  vcs.xml
+│  │  │  workspace.xml
+│  │  │  
+│  │  ├─caches
+│  │  │      build_file_checksums.ser
+│  │  │      
+│  │  └─codeStyles
+│  │          Project.xml
+│  │          
+│  ├─app
+│  │  │  .gitignore
+│  │  │  build.gradle
+│  │  │  keystore.jks
+│  │  │  proguard-rules.pro
+│  │  │  
+│  │  └─src
+│  │      ├─androidTest
+│  │      │  └─java
+│  │      │      └─com
+│  │      │          └─example
+│  │      │              └─yc
+│  │      │                  └─androidsrc
+│  │      │                          ExampleInstrumentedTest.java
+│  │      │                          
+│  │      ├─main
+│  │      │  │  AndroidManifest.xml
+│  │      │  │  
+│  │      │  ├─java
+│  │      │  │  └─com
+│  │      │  │      └─example
+│  │      │  │          └─yc
+│  │      │  │              └─androidsrc
+│  │      │  │                  ├─adapter
+│  │      │  │                  │      EnergySourceAdapter.java
+│  │      │  │                  │      MenuItemAdapter.java
+│  │      │  │                  │      TimeLineAdapter.java
+│  │      │  │                  │      TodoListAdapter.java
+│  │      │  │                  │      ViewPagerAdapter.java
+│  │      │  │                  │      
+│  │      │  │                  ├─common
+│  │      │  │                  │      AppConfig.java
+│  │      │  │                  │      DataMonitor.java
+│  │      │  │                  │      
+│  │      │  │                  ├─db
+│  │      │  │                  │      DailyEnergyDao.java
+│  │      │  │                  │      DBOpenHelper.java
+│  │      │  │                  │      EnergyOfPlanDao.java
+│  │      │  │                  │      EnergySourceDao.java
+│  │      │  │                  │      LocalLoginDao.java
+│  │      │  │                  │      PlanDataDao.java
+│  │      │  │                  │      SelfTalkingDao.java
+│  │      │  │                  │      StepDataDao.java
+│  │      │  │                  │      UserDataDao.java
+│  │      │  │                  │      
+│  │      │  │                  ├─model
+│  │      │  │                  │      Advertisement.java
+│  │      │  │                  │      DailyEnergyEntity.java
+│  │      │  │                  │      EnergySourceEntity.java
+│  │      │  │                  │      MenuItem.java
+│  │      │  │                  │      PlanEntity.java
+│  │      │  │                  │      SelfTalkingEntity.java
+│  │      │  │                  │      StepEntity.java
+│  │      │  │                  │      TodoListItem.java
+│  │      │  │                  │      _User.java
+│  │      │  │                  │      
+│  │      │  │                  ├─presenter
+│  │      │  │                  │  │  DailyPlanPresenterCompl.java
+│  │      │  │                  │  │  DynamicPresenterCompl.java
+│  │      │  │                  │  │  GrowUpPresenterCompl.java
+│  │      │  │                  │  │  LoginPresenterCompl.java
+│  │      │  │                  │  │  PersonalMsgPresenterCompl.java
+│  │      │  │                  │  │  RegisterPresenterCompl.java
+│  │      │  │                  │  │  SelfTalkingPresenterCompl.java
+│  │      │  │                  │  │  StepCounterPresenterCompl.java
+│  │      │  │                  │  │  
+│  │      │  │                  │  └─impl
+│  │      │  │                  │          IDailyPlanPresenter.java
+│  │      │  │                  │          IDynamicPresenter.java
+│  │      │  │                  │          IGrowUpPresenter.java
+│  │      │  │                  │          ILoginPresenter.java
+│  │      │  │                  │          IPersonalMsgPresenter.java
+│  │      │  │                  │          IRegisterPresenter.java
+│  │      │  │                  │          ISelfTalkingPresenter.java
+│  │      │  │                  │          IStepCounterPresenter.java
+│  │      │  │                  │          
+│  │      │  │                  ├─service
+│  │      │  │                  │      AdvertisementService.java
+│  │      │  │                  │      StepCounterService.java
+│  │      │  │                  │      UpdateUIStepCallBack.java
+│  │      │  │                  │      
+│  │      │  │                  ├─ui
+│  │      │  │                  │  ├─activity
+│  │      │  │                  │  │      DynamicActivity.java
+│  │      │  │                  │  │      LoginActivity.java
+│  │      │  │                  │  │      MainActivity.java
+│  │      │  │                  │  │      RegisterActivity.java
+│  │      │  │                  │  │      SelfTalkingActivity.java
+│  │      │  │                  │  │      StepChartActivity.java
+│  │      │  │                  │  │      UserSettingsActivity.java
+│  │      │  │                  │  │      WebViewActivity.java
+│  │      │  │                  │  │      WelcomeActivity.java
+│  │      │  │                  │  │      
+│  │      │  │                  │  ├─fragment
+│  │      │  │                  │  │      ActiveDegreeFragment.java
+│  │      │  │                  │  │      DailyPlanFragment.java
+│  │      │  │                  │  │      EnergyHouseFragment.java
+│  │      │  │                  │  │      GrowUpFragment.java
+│  │      │  │                  │  │      MenuFragment.java
+│  │      │  │                  │  │      MonthStepFragment.java
+│  │      │  │                  │  │      PersonalMsgFragment.java
+│  │      │  │                  │  │      StepCounterFragment.java
+│  │      │  │                  │  │      WeekStepFragment.java
+│  │      │  │                  │  │      WormholeFragment.java
+│  │      │  │                  │  │      
+│  │      │  │                  │  └─impl
+│  │      │  │                  │          IDailyPlanView.java
+│  │      │  │                  │          IGrowUpView.java
+│  │      │  │                  │          ILoginView.java
+│  │      │  │                  │          IPersonalMsgView.java
+│  │      │  │                  │          IRegisterView.java
+│  │      │  │                  │          IStepCounterView.java
+│  │      │  │                  │          
+│  │      │  │                  ├─utils
+│  │      │  │                  │      CheckUtil.java
+│  │      │  │                  │      DateUtil.java
+│  │      │  │                  │      ImageDownloadUtil.java
+│  │      │  │                  │      ImageUtil.java
+│  │      │  │                  │      SharedPreferencesUtil.java
+│  │      │  │                  │      ToastUtil.java
+│  │      │  │                  │      
+│  │      │  │                  ├─views
+│  │      │  │                  │      BottomNavigation.java
+│  │      │  │                  │      CustomDialog.java
+│  │      │  │                  │      EnergyMarkView.java
+│  │      │  │                  │      GifView.java
+│  │      │  │                  │      HeadZoomScrollView.java
+│  │      │  │                  │      ImageTextButton.java
+│  │      │  │                  │      LineChartMarkView.java
+│  │      │  │                  │      StepProgressView.java
+│  │      │  │                  │      TextButton.java
+│  │      │  │                  │      
+│  │      │  │                  └─widget
+│  │      │  │                          AppWidget.java
+│  │      │  │                          
+│  │      │  └─res
+│  │      │      ├─drawable
+│  │      │      │      button_shape_1.xml
+│  │      │      │      button_shape_2.xml
+│  │      │      │      button_shape_3.xml
+│  │      │      │      button_shape_4.xml
+│  │      │      │      button_shape_5.xml
+│  │      │      │      button_shape_6.xml
+│  │      │      │      button_shape_7.xml
+│  │      │      │      button_shape_8.xml
+│  │      │      │      button_shape_9.xml
+│  │      │      │      chart_draw_fade.xml
+│  │      │      │      cursor_1.xml
+│  │      │      │      dialog_background_1.xml
+│  │      │      │      dialog_background_2.xml
+│  │      │      │      dialog_background_3.xml
+│  │      │      │      dialog_background_4.xml
+│  │      │      │      edit_text_shape_1.xml
+│  │      │      │      edit_text_shape_2.xml
+│  │      │      │      ic_add_white_24dp.xml
+│  │      │      │      ic_arrow_back_white_24dp.xml
+│  │      │      │      ic_chevron_left_white_24dp.xml
+│  │      │      │      ic_cloud_queue_24dp.xml
+│  │      │      │      ic_graphic_eq_white_24dp.xml
+│  │      │      │      ic_keyboard_arrow_right_24dp.xml
+│  │      │      │      ic_menu_black_24dp.xml
+│  │      │      │      ic_menu_white_24dp.xml
+│  │      │      │      ic_play_arrow_black_24dp.xml
+│  │      │      │      ic_play_arrow_white_24dp.xml
+│  │      │      │      ic_power_settings_new_24dp.xml
+│  │      │      │      ic_settings_24dp.xml
+│  │      │      │      ic_stop_black_24dp.xml
+│  │      │      │      ic_stop_white_24dp.xml
+│  │      │      │      image_border.xml
+│  │      │      │      listview_shape.xml
+│  │      │      │      mark_shape_1.xml
+│  │      │      │      progressbar_bg.xml
+│  │      │      │      
+│  │      │      ├─drawable-nodpi
+│  │      │      │      example_appwidget_preview.png
+│  │      │      │      
+│  │      │      ├─layout
+│  │      │      │      activity_dynamic.xml
+│  │      │      │      activity_login.xml
+│  │      │      │      activity_main.xml
+│  │      │      │      activity_register.xml
+│  │      │      │      activity_self_talking.xml
+│  │      │      │      activity_step_chart.xml
+│  │      │      │      activity_user_settings.xml
+│  │      │      │      activity_welcome.xml
+│  │      │      │      add_energy_custom_dialog.xml
+│  │      │      │      add_plan_custom_dialog.xml
+│  │      │      │      add_selftalking_custom_dialog.xml
+│  │      │      │      app_widget.xml
+│  │      │      │      chart_mark_view_1.xml
+│  │      │      │      chart_mark_view_2.xml
+│  │      │      │      completed_list_item.xml
+│  │      │      │      display_selftalking_custom_dialog.xml
+│  │      │      │      dynamic_timeline_list_item.xml
+│  │      │      │      fragment_active_degree.xml
+│  │      │      │      fragment_community.xml
+│  │      │      │      fragment_daily_plan.xml
+│  │      │      │      fragment_energy_house.xml
+│  │      │      │      fragment_grow_up.xml
+│  │      │      │      fragment_menu.xml
+│  │      │      │      fragment_month_step.xml
+│  │      │      │      fragment_personal_msg.xml
+│  │      │      │      fragment_step_counter.xml
+│  │      │      │      fragment_week_step.xml
+│  │      │      │      fragment_wormhole.xml
+│  │      │      │      image_text_btn.xml
+│  │      │      │      list_view_item_1.xml
+│  │      │      │      list_view_item_2.xml
+│  │      │      │      list_view_item_3.xml
+│  │      │      │      load_view.xml
+│  │      │      │      logout_custom_dialog.xml
+│  │      │      │      menu_list_item.xml
+│  │      │      │      modify_msg_custom_dialog.xml
+│  │      │      │      modify_plan_custom_dialog.xml
+│  │      │      │      modify_selftalking_custom_dialog.xml
+│  │      │      │      receive_energy_custom_dialog.xml
+│  │      │      │      register_success_dialog.xml
+│  │      │      │      selftalking_timeline_list_item.xml
+│  │      │      │      sync_custom_dialog.xml
+│  │      │      │      text_btn.xml
+│  │      │      │      todo_list_item.xml
+│  │      │      │      upgrade_custom_dialog.xml
+│  │      │      │      user_share_dialog.xml
+│  │      │      │      user_state_custom_dialog.xml
+│  │      │      │      webview.xml
+│  │      │      │      
+│  │      │      ├─mipmap-hdpi
+│  │      │      │      airship.png
+│  │      │      │      astronaut_icon.png
+│  │      │      │      battery_icon.png
+│  │      │      │      book_icon.png
+│  │      │      │      boy.gif
+│  │      │      │      button_bg.png
+│  │      │      │      circle_blue_icon.png
+│  │      │      │      circle_gray_icon.png
+│  │      │      │      compass_icon.png
+│  │      │      │      completed_listview_icon.png
+│  │      │      │      completed_list_icon.png
+│  │      │      │      coopen.jpg
+│  │      │      │      crown_icon.png
+│  │      │      │      download_icon.png
+│  │      │      │      dynamic_icon.png
+│  │      │      │      get_energy_blue_icon.png
+│  │      │      │      get_energy_gray_icon.png
+│  │      │      │      head.jpg
+│  │      │      │      ic_launcher.png
+│  │      │      │      ic_launcher_round.png
+│  │      │      │      left_icon.png
+│  │      │      │      level_1.gif
+│  │      │      │      level_2.gif
+│  │      │      │      level_3.gif
+│  │      │      │      level_4.gif
+│  │      │      │      level_5.gif
+│  │      │      │      level_6.gif
+│  │      │      │      level_7.gif
+│  │      │      │      level_8.gif
+│  │      │      │      lighting_icon.png
+│  │      │      │      moments_share_icon.png
+│  │      │      │      moon.gif
+│  │      │      │      plan_icon.png
+│  │      │      │      progress_icon.gif
+│  │      │      │      qq_icon.png
+│  │      │      │      right_icon.png
+│  │      │      │      rocket.png
+│  │      │      │      rocket_icon.png
+│  │      │      │      star_bg.png
+│  │      │      │      star_icon.png
+│  │      │      │      step_icon.png
+│  │      │      │      todo_listview_icon.png
+│  │      │      │      todo_list_icon.png
+│  │      │      │      trend_icon.png
+│  │      │      │      wechat_icon.png
+│  │      │      │      wechat_share_icon.png
+│  │      │      │      weibo_icon.png
+│  │      │      │      whale_icon.png
+│  │      │      │      wormhole_icon.png
+│  │      │      │      
+│  │      │      ├─mipmap-mdpi
+│  │      │      │      ic_launcher.png
+│  │      │      │      ic_launcher_round.png
+│  │      │      │      
+│  │      │      ├─mipmap-xhdpi
+│  │      │      │      ic_launcher.png
+│  │      │      │      ic_launcher_round.png
+│  │      │      │      
+│  │      │      ├─mipmap-xxhdpi
+│  │      │      │      ic_launcher.png
+│  │      │      │      ic_launcher_round.png
+│  │      │      │      logo.png
+│  │      │      │      
+│  │      │      ├─mipmap-xxxhdpi
+│  │      │      │      ic_launcher.png
+│  │      │      │      ic_launcher_round.png
+│  │      │      │      
+│  │      │      ├─values
+│  │      │      │      attrs.xml
+│  │      │      │      colors.xml
+│  │      │      │      dimens.xml
+│  │      │      │      strings.xml
+│  │      │      │      styles.xml
+│  │      │      │      
+│  │      │      ├─values-v14
+│  │      │      │      dimens.xml
+│  │      │      │      
+│  │      │      ├─values-v19
+│  │      │      │      styles.xml
+│  │      │      │      
+│  │      │      └─xml
+│  │      │              app_widget_info.xml
+│  │      │              
+│  │      └─test
+│  │          └─java
+│  │              └─com
+│  │                  └─example
+│  │                      └─yc
+│  │                          └─androidsrc
+│  │                                  ExampleUnitTest.java
+│  │                                  
+│  └─gradle
+│      └─wrapper
+│              gradle-wrapper.jar
+│              gradle-wrapper.properties
+│              
+├─docs
+│      .DS_Store
+│      Augmented Vehicular Reality.ppt
+│      Ledig_Photo-Realistic_Single_Image.pptx
+│      关于非宅.md
+│      毕设构思（初版）.pptx
+│      用户手册.md
+│      用户指南.md
+│      
+└─images
+        ActiveDegreeFrag.png
+        ActiveDegreeFrag_shell.png
+        DailyPlanFrag.png
+        DailyPlanFrag_shell.png
+        DynamicActivity.jpeg
+        DynamicActivity_shell.png
+        EnergyHouseFrag.png
+        EnergyHouseFrag_1.png
+        EnergyHouseFrag_2.png
+        EnergyHouseFrag_new.png
+        EnergyHouseFrag_share.png
+        EnergyHouseFrag_shell.png
+        EnergyHouseFrag_shell_1.png
+        EnergyHouseFrag_shell_2.png
+        EnergyHouseFrag_shell_new.png
+        example_appwidget_preview.png
+        function_intro.png
+        LoginActivity.png
+        LoginActivity_shell.png
+        MenuFrag.png
+        MenuFrag_shell.png
+        mvp.png
+        notification.png
+        notification_shell.png
+        PersonalMsgFrag.jpeg
+        PersonalMsgFrag_shell.png
+        process.png
+        process.svg
+        push.jpeg
+        push_shell.jpeg
+        RegisterActivity.png
+        RegisterActivity_shell.png
+        SelfTalkingActivity.png
+        SelfTalkingActivity_shell.png
+        StepChartActivity_1.png
+        StepChartActivity_2.png
+        StepChartActivity_shell_1.png
+        StepChartActivity_shell_2.png
+        StepCounterFrag.png
+        StepCounterFrag_shell.png
+        upgrade.gif
+        UserSettingsActivity.png
+        UserSettingsActivity_shell.png
+        WelcomeActivity.jpg
+        WelcomeActivity_shell.jpg
+        WormholeFrag.png
+        WormholeFrag_1.png
+        WormholeFrag_shell.png
+        WormholeFrag_shell_1.png
+        
