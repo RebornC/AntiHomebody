@@ -28,7 +28,7 @@
 
 ## 技术架构
 
-
+![](https://github.com/RebornC/AntiHomebody/blob/master/images/architecture.jpg?raw=true)
 
 ## 功能模块
 
