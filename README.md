@@ -4,7 +4,7 @@
 
 项目安装包下载链接：https://github.com/RebornC/AntiHomebody/releases
 
-或者您可以直接用安卓手机扫描下方的二维码进行apk下载
+或者您可以直接用安卓手机扫描下方的二维码进行apk下载。
 
 <img src="https://github.com/RebornC/AntiHomebody/blob/master/images/QrCode.png?raw=true" width="17%" height="17%">
 
