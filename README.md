@@ -8,6 +8,8 @@
 
 <img src="https://github.com/RebornC/AntiHomebody/blob/master/images/QrCode.png?raw=true" width="17%" height="17%">
 
+<br/>
+
 ## 项目内容
 
 一款自我管理类的 Android APP，主要帮助用户重建积极向上的人生态度。
@@ -30,24 +32,33 @@
       
 - [x] 监督机制
 
-      建立数据监测系统。用户每日首次登录时，该系统会根据近7天的能量均值和上升趋势，进行活跃度的评判，从而采取对应的能量奖罚措施。
+      建立数据监测系统。用户每日首次登录时（在账号注册已满7天的情况下），该系统会根据近7天的能量均值和上升趋势，进行活跃度的评判，从而采取对应的能量奖罚措施。
       
+<br/>
+
 用户通过以上三个途径获取能量，一方面用以浇灌主界面的小人形象，使其得以成长；另一方面，在坚持完成任务的同时，用户也逐渐摆脱颓丧的现状，养成了更加积极向上的生活态度。这便是非宅APP的意义所在。
 
 另外，在实现核心功能的基础上，非宅APP也加入了一些其他功能，例如“虫洞”，用以记录用户的当下思绪和想法，并以时间轴形式进行展示；用户也可编辑自己的资料、查看自己的各种能量动态。同时，非宅APP导入了一些第三方SDK，用以实现微信分享、消息推送等外部功能，使其成为一个更加丰富的应用。
 
+<br/>
+
+## 进度计划
+
+![](https://github.com/RebornC/AntiHomebody/blob/master/images/process.png?raw=true)
+
+<br/>
 
 ## 技术架构
 
 ![](https://github.com/RebornC/AntiHomebody/blob/master/images/architecture.jpg?raw=true)
 
+<br/>
+
 ## 功能模块
 
 ![](https://github.com/RebornC/AntiHomebody/blob/master/images/function_intro.png?raw=true)
 
-## 进度计划
-
-![](https://github.com/RebornC/AntiHomebody/blob/master/images/process.png?raw=true)
+<br/>
 
 ## 会议记录
 
@@ -88,6 +99,8 @@
   最后导师给了85的暂定分。
   
   PS：后来自己思考了一番，主要是我的作品偏工程性，重点落在产品设计、架构搭建、模块划分、功能实现，整个研发过程其实是一个小型的“产品开发周期”，而并非是某种技术知识点的研究，所以很难在短时间内进行一个完整的展示。当然我的展示方式也有很多不足之处（过于拖沓，说不清楚重点），后期会以文档形式加以说明。希望导师能多多谅解。
+
+<br/>
   
 ## 工作总结
 
