@@ -2,6 +2,12 @@
 
 假如你属于消极、颓丧、饱受懒癌或拖延症困扰的宅人群体，那么「非宅」欢迎您的到来。
 
+项目安装包下载链接：https://github.com/RebornC/AntiHomebody/releases
+
+或者您可以直接用安卓手机扫描下方的二维码进行apk下载
+
+<img src="https://github.com/RebornC/AntiHomebody/blob/master/images/QrCode.png?raw=true" width="17%" height="17%">
+
 ## 项目内容
 
 一款自我管理类的APP，主要帮助用户重建积极向上的人生态度。
